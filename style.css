@@ -19,22 +19,21 @@ header {
   padding: 20px;
 }
 
-/* Style the logo image */
-.logo {
-  width: 50px; /* changed from 100px */
-  border-radius: 50%; /* added this line */
+/* Style the name */
+h1 {
+  margin-left: 20px; /* added this line */
 }
 
 /* Style the menu list */
 .menu {
   display: flex;
   list-style: none;
-  margin-right: 20px; /* added this line */
 }
 
 /* Style the menu items */
-.menu li {
-  margin-left: 20px;
+.menu article {
+  /* Added some margin to create a gap between the tab buttons */
+  margin: 0 10px;
 }
 
 /* Style the menu links */
@@ -61,10 +60,40 @@ header {
   filter: drop-shadow(-2px -2px 5px rgba(255,255,255,0.2)) drop-shadow(-2px -2px 10px rgba(255,0,255,0.5));
 }
 
+
 /* Style the main section */
 main {
   padding: 20px;
 }
+
+/* Reset default browser styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Set a light purple background color for the body */
+body {
+  background-color: #f0f0ff; /* changed from #fff */
+  font-family: Arial, sans-serif;
+}
+
+
+
+/* Style the tab content divs */
+.tabcontent {
+  /* Hide them by default using display none */
+  display: none;
+}
+
+/* Style the active tab content div */
+.tabcontent.active {
+  /* Show it using display block */
+  display: block;
+}
+
+
 
 /* Style the gallery container */
 .gallery {

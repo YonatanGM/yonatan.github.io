@@ -10,80 +10,94 @@
 </head>
 <body>
   <header>
-    <div class="logo">
-      <!-- Added an alt attribute -->
-      <img src="assets/logo.png" alt="Your logo">
-    </div>
+    <!-- Deleted the logo div element -->
+    <!-- Used a heading element for your name -->
+    <h1>Yonatan<br>Mamo</h1>
     <nav>
       <!-- Used a semantic HTML element -->
       <section class="menu">
         <!-- Used a semantic HTML element -->
-        <article><a href="personal.html" class="active">Personal Work</a></article>
-        <article><a href="professional.html">Professional Work</a></article>
-        <article><a href="fanart.html">Fan Art</a></article>
-        <article><a href="contact.html">Contact</a></article>
+        <!-- Changed the menu links to match the new tabs -->
+        
+        <article><a href="#about">About</a></article>
+        <article><a href="#3d" class="active">3D Experiments</a></article>
+        <article><a href="#contact">Contact</a></article>
       </section>
     </nav>
   </header>
   <!-- Used a semantic HTML element -->
   <section class="main">
-      <!-- Used a semantic HTML element -->
-      <article class="gallery">
-        <!-- Use a script tag to create a for loop -->
-        <script>
-          // Set the number of videos
-          const numVideos = 20;
-          // Loop from 1 to numVideos
-          for (let i = 1; i <= numVideos; i++) {
-            // Check if the current index is divisible by 3 or equal to 1
-            if (i % 3 === 0 || i === 1) {
-              // Create a new column element
-              var column = document.createElement('div');
-              column.className = 'column';
-              // Append the column element to the gallery element
-              document.querySelector('.gallery').appendChild(column);
+      <!-- Added div elements with different ids for each tab content -->
+      <!-- Hid them by default using CSS -->
+      <!-- Used some placeholder text for the About and Contact tabs -->
+      <div id="3d" class="tabcontent">
+        <!-- Used a semantic HTML element -->
+        <article class="gallery">
+          <!-- Use a script tag to create a for loop -->
+          <script>
+            // Set the number of videos
+            const numVideos = 20;
+            // Loop from 1 to numVideos
+            for (let i = 1; i <= numVideos; i++) {
+              // Check if the current index is divisible by 2 or equal to 1
+              // Changed from i % 3 === 0 || i === 1
+              if (i % 2 === 0 || i === 1) {
+                // Create a new column element
+                var column = document.createElement('div');
+                column.className = 'column';
+                // Append the column element to the gallery element
+                document.querySelector('.gallery').appendChild(column);
+              }
+              // Create a video element with the src and alt attributes
+              var video = document.createElement('video');
+              video.src = `assets/video${i}.mp4`;
+              video.alt = `Video ${i}`;
+              // Append the video element to the last column element
+              column.appendChild(video);
             }
-            // Create a video element with the src and alt attributes
-            var video = document.createElement('video');
-            video.src = `assets/video${i}.mp4`;
-            video.alt = `Video ${i}`;
-            // Append the video element to the last column element
-            column.appendChild(video);
-          }
-        </script>
-        <script>
-          /* Added these lines to create the overlapping and depth effect */
-          /* Select all the videos */
-          var videos = document.querySelectorAll('.column video');
-          /* Loop through the videos */
-          for (var i = 0; i < videos.length; i++) {
-            /* Set the z-index value based on the index */
-            videos[i].style.zIndex = i + 1;
-            /* Set the margin-left value based on the index using a logarithmic function */
-            videos[i].style.marginLeft = (Math.log(i + 1) * 10) + 'px';
-            /* Added these lines to create the pop up effect */
-            /* Add a hover event listener to each video */
-            if (i % 2 === 0) {
-              /* Set the rotateY value to -20deg for even indices */
-              videos[i].style.rotateY = '-20deg';
-            } else {
-              /* Set the rotateY value to 20deg for odd indices */
-              videos[i].style.rotateY = '20deg';
-            }
-            videos[i].addEventListener('mouseover', function(e) {
-              /* Save the original z-index value */
-              var originalZIndex = this.style.zIndex;
-              /* Set the z-index value to a high number */
-              this.style.zIndex = '100';
-              /* Add a mouseout event listener to restore the original z-index value */
-              this.addEventListener('mouseout', function() {
-                this.style.zIndex = originalZIndex;
+          </script>
+          <script>
+            /* Added these lines to create the overlapping and depth effect */
+            /* Select all the videos */
+            var videos = document.querySelectorAll('.column video');
+            /* Loop through the videos */
+            for (var i = 0; i < videos.length; i++) {
+              /* Set the z-index value based on the index */
+              videos[i].style.zIndex = i + 1;
+              /* Set the margin-left value based on the index using a logarithmic function */
+              videos[i].style.marginLeft = (Math.log(i + 1) * 10) + 'px';
+              /* Added these lines to create the pop up effect */
+              /* Add a hover event listener to each video */
+              if (i % 2 === 0) {
+                /* Set the rotateY value to -20deg for even indices */
+                videos[i].style.rotateY = '-20deg';
+              } else {
+                /* Set the rotateY value to 20deg for odd indices */
+                videos[i].style.rotateY = '20deg';
+              }
+              videos[i].addEventListener('mouseover', function(e) {
+                /* Save the original z-index value */
+                var originalZIndex = this.style.zIndex;
+                /* Set the z-index value to a high number */
+                this.style.zIndex = '100';
+                /* Add a mouseout event listener to restore the original z-index value */
+                this.addEventListener('mouseout', function() {
+                  this.style.zIndex = originalZIndex;
+                });
               });
-            });
-          }
-        </script>
+            }
+          </script>
 
-      </article>
+        </article>
+      </div>
+      <div id="about" class="tabcontent">
+        <h2>About</h2>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed quis leo quis nisi consequat ullamcorper. Donec vitae lacus vitae leo tincidunt luctus. Morbi id nisl ut elit sagittis aliquet. Quisque euismod, lorem quis malesuada tincidunt, massa eros ultrices sapien, sit amet sagittis nisl lorem et nisi. Fusce quis semper augue. Sed nec lectus at erat lacinia malesuada. Curabitur eget nisl auctor, consequat arcu id, fermentum neque.</p>
+      </div>
+      <div id="contact" class="tabcontent">
+        <h2>Contact</h2>
+        <p>Phasellus ut justo vel leo fringilla mattis. Suspendisse potenti. Praesent sed diam in lorem ultrices lacinia. In hac habitasse platea dictumst. Duis vitae augue ac quam sagittis blandit. Vivamus et felis quis elit tincidunt aliquam. Cras euismod, quam at varius commodo, velit mi malesuada justo, sit amet sodales massa diam non dolor.</p>
+      </div>
     <!-- added a video element to display the full-size video -->
 <!--    <video class="displayed-vid" src="" alt="" muted></video>-->
     <!-- Used a semantic HTML element -->
@@ -94,4 +108,3 @@
   </section>
 </body>
 </html>
-

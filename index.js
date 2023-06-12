@@ -2,6 +2,9 @@
 const thumbBar = document.querySelectorAll('.column'); // changed from querySelector
 const btn = document.querySelector('button');
 const overlay = document.querySelector('.overlay');
+// Added these lines to get the menu links and the tab content divs
+const menuLinks = document.querySelectorAll('.menu a');
+const tabContents = document.querySelectorAll('.tabcontent');
 
 // Loop through the columns and add event listeners to each video
 thumbBar.forEach(function(column) {
@@ -76,3 +79,55 @@ btn.addEventListener('click', function() {
     overlay.style.backgroundColor = 'rgba(0,0,0,0)';
   }
 });
+
+// Added these lines to add an event listener to each menu link
+menuLinks.forEach(function(link) {
+  link.addEventListener('click', function(e) {
+    // Prevent the default behavior of the link
+    e.preventDefault();
+    // Get the href attribute of the link
+    let href = link.getAttribute('href');
+    // Call a function to show the corresponding tab content and hide the others
+    showTabContent(href);
+    // Call another function to toggle the active class for the menu links
+    toggleActiveClass(link);
+  });
+});
+
+// Added this function to show the corresponding tab content and hide the others
+function showTabContent(id) {
+  // Loop through the tab content divs
+  tabContents.forEach(function(tab) {
+    // Check if the id of the tab matches the id parameter
+    if (tab.getAttribute('id') === id.slice(1)) {
+      // Add the active class to the tab content div
+      tab.classList.add('active');
+    } else {
+      // Remove the active class from the tab content div
+      tab.classList.remove('active');
+    }
+  });
+}
+
+// Added this function to toggle the active class for the menu links
+function toggleActiveClass(link) {
+  // Loop through the menu links
+  menuLinks.forEach(function(menuLink) {
+    // Check if the menu link matches the link parameter
+    if (menuLink === link) {
+      // Add the active class to the menu link
+      menuLink.classList.add('active');
+    } else {
+      // Remove the active class from the menu link
+      menuLink.classList.remove('active');
+    }
+  });
+}
+
+// Added these lines to call the showTabContent and toggleActiveClass functions at the end of the script
+// Get the first menu link and its href attribute
+let firstMenuLink = menuLinks[1];
+let firstHref = firstMenuLink.getAttribute('href');
+// Call the functions with the first menu link and its href attribute as arguments
+showTabContent(firstHref);
+toggleActiveClass(firstMenuLink);
