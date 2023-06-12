@@ -52,13 +52,13 @@ window.addEventListener('scroll', function() {
       // Set a maximum distance for the tilting effect
       let maxDistance = 300;
       // Calculate the angle of rotation based on the distance and the maximum distance
-      let angle = distance / maxDistance * 20;
+      let angle = distance / maxDistance * 20 ;
       // Limit the angle between -20 and 20 degrees
-      angle = Math.max(-20, Math.min(20, angle));
+      angle = Math.max(0, Math.min(100, angle));
       // Set the transform property of the video element to rotate it around its bottom center point by the calculated angle
       //video.style.transform = `translateZ(-100px) rotateX(${angle}deg)`; // commented out this line
       // Use setAttribute to set the inline style instead
-      video.setAttribute ('style', `transform: translateZ(-100px) rotateX(${angle}deg);`); // added this line
+      video.setAttribute ('style', `transform:  rotateY(${angle}deg)`); // added this line
     });
   });
 });

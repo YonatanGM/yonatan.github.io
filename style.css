@@ -3,12 +3,16 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  
 }
 
 /* Set a light purple background color for the body */
 body {
   background-color: #f0f0ff; /* changed from #fff */
   font-family: Arial, sans-serif;
+  margin-left: 10%;
+  margin-right: 10%;
+
 }
 
 /* Style the header section */
@@ -102,6 +106,8 @@ body {
   flex-direction: column;
   /* Set the scroll behavior to smooth */
   scroll-behavior: smooth;
+    margin-top: 10%;
+/*    perspective: 10000;*/
 }
 
 /* Style the gallery rows */
@@ -118,6 +124,7 @@ body {
   height: 50%;
   /* Set the transform origin to the bottom center of the element */
   transform-origin: bottom center;
+  
 }
 
 /* Style the gallery videos when scrolled over */
@@ -125,89 +132,14 @@ body {
   /* Set the transform property to rotate around the X axis by a variable angle */
   transform: rotateX(var(--angle));
 }
-
-/**/
-/*/* Style the menu links */*/
-/*.menu a {*/
-/*  color: #800080; /* changed from #333 */*/
-/*  text-decoration: none;*/
-/*  /* added these lines */*/
-/*  background-image: radial-gradient(#800080, #800080);*/
-/*  background-size: 0% 100%;*/
-/*  background-repeat: no-repeat;*/
-/*  box-shadow: none;*/
-/*  transition: all 0.3s ease-in-out;*/
-/*}*/
-/**/
-/*/* Style the active menu link */*/
-/*.menu a.active {*/
-/*  border-bottom: 2px solid #ff00ff; /* changed from #00f */*/
-/*}*/
-/**/
-/*/* Style the menu links when hovered over */*/
-/*.menu a:hover {*/
-/*  /* added these lines */*/
-/*  background-size: 100% 100%;*/
-/*  box-shadow: inset -2px -2px 5px rgba(255,255,255,0.2), inset -2px -2px 10px rgba(255,0,255,0.5);*/
-/*}*/
-/**/
-/*/* Style the main section */*/
-/*main {*/
-/*  padding: 300px;*/
-/*}*/
-/**/
-/*/* Style the gallery container */*/
-/*.gallery {*/
-/*  /* Use a grid layout with 2 columns and auto rows */*/
-/*  display: grid;*/
-/*  grid-template-columns: repeat(3, 1fr);*/
-/*  /* Remove this line to make the grid rows have a flexible height */*/
-/*  /* grid-auto-rows: minmax(300px, auto); */*/
-/*  /* Add this line to make the grid items stretch vertically */*/
-/*  align-items: stretch;*/
-/*  /* Add this line to create a 3D perspective effect for the gallery container */*/
-/*  perspective: 1000px;*/
-/*}*/
-/**/
-/*/* Style the gallery columns */*/
-/*.column {*/
-/*  /* Use a flex layout with column direction and center alignment */*/
-/*  display: flex;*/
-/*  flex-direction: column;*/
-/*  align-items: center;*/
-/*  /* Remove this line to make the flex items align to the start of the column direction */*/
-/*  /* justify-content: space-between; */*/
-/*}*/
-/**/
-/*/* Style the gallery videos */*/
-/*.column video {*/
-/*  /* Set the width and height to 100% of the column size */*/
-/*  width: 100%;*/
-/*  height: 100%;*/
-/*  /* Add this line to make the videos fill the available space and crop them if they are too tall or too wide */*/
-/*  object-fit: cover;*/
-/*  /* Add some border radius and box shadow for a nice effect */*/
-/*/*  border-radius: 20px;*/*/
-/*  box-shadow: inset -2px -2px 5px rgba(255,255,255,0.2), inset -2px -2px 10px rgba(255,0,255,0.5);*/
-/*  /* Add this line to make the videos rotate around their bottom center point */*/
-/*  transform-origin: bottom center;*/
-/*  /* Add this line to make the videos have some transparency */*/
-/*/*  opacity: .8;*/*/
-/*  /* Add this line to make the videos have a counter-clockwise rotation around the horizontal axis */*/
-/*  transform: rotateX(-20deg);*/
-/*  /* Add this line to make the videos have a smooth transition effect when hovered over */*/
-/*  transition: all .3s ease-in-out;*/
+/*/* Style the gallery videos when not hovered over */*/
+/*.column video:not(:hover) {*/
+/*  /* Set the transform property to rotate around the X axis by a variable angle and scale down by a factor of two*/*/
+/*  transform: rotateX(var(--angle)) scale(0.5);*/
 /*}*/
 /**/
 /*/* Style the gallery videos when hovered over */*/
 /*.column video:hover {*/
-/*  /* Add this line to make the videos rotate back to normal when hovered over */*/
-/*  transform: rotateX(0deg);*/
-/*  /* Add this line to make the videos pop up above the others when hovered over */*/
-/*  z-index: 100;*/
+/*  /* Set the transform property to none or any other effect you want */*/
+/*  transform: none;*/
 /*}*/
-/*/*/* Style the videos when hovered over */*/*/
-/*/*.column video:hover {*/*/
-/*/* /* added this line to make the videos animate to the normal orientation */*/*/
-/*/* transform: rotateY(20deg);*/*/
-/*/*}*/*/
