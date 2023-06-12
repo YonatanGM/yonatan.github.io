@@ -38,10 +38,10 @@
             // Set the number of videos
             const numVideos = 20;
             // Loop from 1 to numVideos
-            for (let i = 1; i <= numVideos; i++) {
+            for (let i = 0; i < numVideos; i++) {
               // Check if the current index is divisible by 2 or equal to 1
               // Changed from i % 3 === 0 || i === 1
-              if (i % 2 === 0 || i === 1) {
+              if (i % 2 === 0) {
                 // Create a new column element
                 var column = document.createElement('div');
                 column.className = 'column';
@@ -56,55 +56,55 @@
               column.appendChild(video);
             }
           </script>
-          <script>
-            /* Added these lines to create the overlapping and depth effect */
-            /* Select all the videos */
-            var videos = document.querySelectorAll('.column video');
-            /* Loop through the videos */
-            for (var i = 0; i < videos.length; i++) {
-              /* Set the z-index value based on the index */
-              videos[i].style.zIndex = i + 1;
-              /* Set the margin-left value based on the index using a logarithmic function */
-              videos[i].style.marginLeft = (Math.log(i + 1) * 10) + 'px';
-              /* Added these lines to create the pop up effect */
-              /* Add a hover event listener to each video */
-              if (i % 2 === 0) {
-                /* Set the rotateY value to -20deg for even indices */
-                videos[i].style.rotateY = '-20deg';
-              } else {
-                /* Set the rotateY value to 20deg for odd indices */
-                videos[i].style.rotateY = '20deg';
-              }
-              videos[i].addEventListener('mouseover', function(e) {
-                /* Save the original z-index value */
-                var originalZIndex = this.style.zIndex;
-                /* Set the z-index value to a high number */
-                this.style.zIndex = '100';
-                /* Add a mouseout event listener to restore the original z-index value */
-                this.addEventListener('mouseout', function() {
-                  this.style.zIndex = originalZIndex;
-                });
-              });
-            }
-          </script>
 
         </article>
       </div>
       <div id="about" class="tabcontent">
-        <h2>About</h2>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed quis leo quis nisi consequat ullamcorper. Donec vitae lacus vitae leo tincidunt luctus. Morbi id nisl ut elit sagittis aliquet. Quisque euismod, lorem quis malesuada tincidunt, massa eros ultrices sapien, sit amet sagittis nisl lorem et nisi. Fusce quis semper augue. Sed nec lectus at erat lacinia malesuada. Curabitur eget nisl auctor, consequat arcu id, fermentum neque.</p>
-      </div>
-      <div id="contact" class="tabcontent">
-        <h2>Contact</h2>
-        <p>Phasellus ut justo vel leo fringilla mattis. Suspendisse potenti. Praesent sed diam in lorem ultrices lacinia. In hac habitasse platea dictumst. Duis vitae augue ac quam sagittis blandit. Vivamus et felis quis elit tincidunt aliquam. Cras euismod, quam at varius commodo, velit mi malesuada justo, sit amet sodales massa diam non dolor.</p>
-      </div>
+          <p>Hi, I'm Yonatan Mamo, a Software Developer working on iOS development. I have a passion for creating beautiful and functional apps that enhance the user experience. I also like to experiment with 3D graphics and animations as a hobby. I enjoy learning new technologies and exploring new possibilities in the digital world.</p>
+        </div>
+        <div id="contact" class="tabcontent">
+
+          <p>If you want to get in touch, you can find me on <a href="https://www.linkedin.com/in/yonatan-mamo-07b426137/" target="_blank"><i class="fab fa-linkedin"></i> LinkedIn</a>, <a href="https://www.instagram.com/yonatan.gm/" target="_blank"><i class="fab fa-instagram"></i> Instagram</a>, or send me an email at <i class="far fa-envelope"></i> girmayonatan86@gmail.com.</p>
+        </div>
     <!-- added a video element to display the full-size video -->
 <!--    <video class="displayed-vid" src="" alt="" muted></video>-->
     <!-- Used a semantic HTML element -->
-    <footer class="overlay"></footer>a
-    <button class="dark">Darken</button>
+    <footer class="overlay"></footer>
+    <button class="dark"></button>
+    
     <!-- moved the script tag to the end of the body tag -->
     <script src="index.js"></script>
+    <script>
+      /* Added these lines to create the overlapping and depth effect */
+      /* Select all the videos */
+      var videos = document.querySelectorAll('.column video');
+      /* Loop through the videos */
+      for (var i = 0; i < videos.length; i++) {
+        /* Set the z-index value based on the index */
+        videos[i].style.zIndex = i + 1;
+        /* Set the margin-left value based on the index using a logarithmic function */
+        videos[i].style.marginLeft = (Math.log(i + 1) * 10) + 'px';
+        /* Added these lines to create the pop up effect */
+        /* Add a hover event listener to each video */
+        if (i % 2 === 0) {
+          /* Set the rotateY value to -20deg for even indices */
+          videos[i].style.rotateY = '-20deg';
+        } else {
+          /* Set the rotateY value to 20deg for odd indices */
+          videos[i].style.rotateY = '20deg';
+        }
+        videos[i].addEventListener('mouseover', function(e) {
+          /* Save the original z-index value */
+          var originalZIndex = this.style.zIndex;
+          /* Set the z-index value to a high number */
+          this.style.zIndex = '100';
+          /* Add a mouseout event listener to restore the original z-index value */
+          this.addEventListener('mouseout', function() {
+            this.style.zIndex = originalZIndex;
+          });
+        });
+      }
+    </script>
   </section>
 </body>
 </html>

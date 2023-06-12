@@ -25,13 +25,14 @@ header {
 
 /* Style the name */
 h1 {
-  margin-left: 20px; /* added this line */
+/*  margin-left: 20px; /* added this line */*/
 }
 
 /* Style the menu list */
 .menu {
   display: flex;
   list-style: none;
+  
 }
 
 /* Style the menu items */
@@ -60,14 +61,18 @@ h1 {
 /* Style the menu links when hovered over */
 .menu a:hover {
   /* added these lines */
-  background-size: 100% 100%;
-  filter: drop-shadow(-2px -2px 5px rgba(255,255,255,0.2)) drop-shadow(-2px -2px 10px rgba(255,0,255,0.5));
+/*  filter: opacity(10%); /*/
+  background-color: rgba(255, 0, 255, 0.5);
+/*  background-size: -50% -50%;*/
+  
+  filter: drop-shadow(-2px -2px 5px rgba(255,255,255,0.2)) drop-shadow(-2px -2px 10px rgba(255,0,255,0.1));
+  /* changed this line */
+/*  background-color: rgba(255,0,255,0.1); /* purple with 10% opacity */*/
 }
-
 
 /* Style the main section */
 main {
-  padding: 20px;
+/*  padding: 20px;*/
 }
 
 /* Reset default browser styles */
@@ -81,9 +86,17 @@ main {
 body {
   background-color: #f0f0ff; /* changed from #fff */
   font-family: Arial, sans-serif;
+/*  margin: 5%;*/
+  padding: 20px;
 }
 
 
+section {
+    
+/*    padding: 10px;*/
+    padding: 20px;
+   
+}
 
 /* Style the tab content divs */
 .tabcontent {
@@ -106,7 +119,7 @@ body {
   flex-direction: column;
   /* Set the scroll behavior to smooth */
   scroll-behavior: smooth;
-    margin-top: 10%;
+
 /*    perspective: 10000;*/
 }
 
@@ -120,18 +133,18 @@ body {
 /* Style the gallery videos */
 .column video {
   /* Set the width and height to 50% of the parent element */
-  width: 50%;
+  width: 49%;
   height: 50%;
   /* Set the transform origin to the bottom center of the element */
   transform-origin: bottom center;
   
 }
 
-/* Style the gallery videos when scrolled over */
-.column video.scrolled {
-  /* Set the transform property to rotate around the X axis by a variable angle */
-  transform: rotateX(var(--angle));
-}
+/*/* Style the gallery videos when scrolled over */*/
+/*.column video.scrolled {*/
+/*  /* Set the transform property to rotate around the X axis by a variable angle */*/
+/*  transform: rotateX(var(--angle));*/
+/*}*/
 /*/* Style the gallery videos when not hovered over */*/
 /*.column video:not(:hover) {*/
 /*  /* Set the transform property to rotate around the X axis by a variable angle and scale down by a factor of two*/*/
