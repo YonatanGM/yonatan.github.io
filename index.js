@@ -138,6 +138,7 @@ let mediaQuery = window.matchMedia('(max-width: 600px)');
 // Declare a function that adds or removes the touch event listeners to the videos based on the media query
 function handleMediaQuery(mediaQuery) {
   // Loop through the videos
+  var newVideo = column.querySelectorAll('video');
   newVideo.forEach(function(video) {
     // Check if the media query matches
     if (mediaQuery.matches) {
