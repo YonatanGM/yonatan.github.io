@@ -131,3 +131,39 @@ let firstHref = firstMenuLink.getAttribute('href');
 // Call the functions with the first menu link and its href attribute as arguments
 showTabContent(firstHref);
 toggleActiveClass(firstMenuLink);
+
+// Declare a media query variable that matches devices with a max-width of 600px
+let mediaQuery = window.matchMedia('(max-width: 600px)');
+
+// Declare a function that adds or removes the touch event listeners to the videos based on the media query
+function handleMediaQuery(mediaQuery) {
+  // Loop through the videos
+  newVideo.forEach(function(video) {
+    // Check if the media query matches
+    if (mediaQuery.matches) {
+      // Add the touch event listeners to the video
+      video.addEventListener('touchstart', function(e) {
+        // Prevent the default behavior of the touch event
+        e.preventDefault();
+        // Set the timer variable to a setTimeout function that plays the video after 500 milliseconds
+        timer = setTimeout(function() {
+          video.play();
+        }, 500);
+      });
+      video.addEventListener('touchend', function(e) {
+        // Prevent the default behavior of the touch event
+        e.preventDefault();
+        // Clear the timer variable using clearTimeout function
+        clearTimeout(timer);
+        // Pause the video
+        video.pause();
+      });
+    }
+  });
+}
+
+// Call the function with the media query variable as an argument
+handleMediaQuery(mediaQuery);
+
+// Add an event listener to the media query variable that calls the function whenever the media query changes
+mediaQuery.addEventListener('change', handleMediaQuery);
