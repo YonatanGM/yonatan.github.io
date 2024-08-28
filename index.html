@@ -4,75 +4,74 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <!-- Added a title tag -->
   <title>Your Name</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <header>
-    <!-- Deleted the logo div element -->
-    <!-- Used a heading element for your name -->
     <h1>Yonatan Mamo</h1>
     <nav>
-      <!-- Used a semantic HTML element -->
       <section class="menu">
-        <!-- Used a semantic HTML element -->
-        <!-- Changed the menu links to match the new tabs -->
-        
         <article><a href="#about">About</a></article>
         <article><a href="#3d" class="active">3D Experiments</a></article>
         <article><a href="#contact">Contact</a></article>
       </section>
     </nav>
   </header>
-  <!-- Used a semantic HTML element -->
+  
   <section class="main">
-      <!-- Added div elements with different ids for each tab content -->
-      <!-- Hid them by default using CSS -->
-      <!-- Used some placeholder text for the About and Contact tabs -->
       <div id="3d" class="tabcontent">
-        <!-- Used a semantic HTML element -->
         <article class="gallery">
-          <!-- Use a script tag to create a for loop -->
           <script>
-            // Set the number of videos
             const numVideos = 18;
-            // Loop from 1 to numVideos
+
             for (let i = 0; i < numVideos; i++) {
-              // Check if the current index is divisible by 2 or equal to 1
-              // Changed from i % 3 === 0 || i === 1
               if (i % 2 === 0) {
-                // Create a new column element
                 var column = document.createElement('div');
                 column.className = 'column';
-                // Append the column element to the gallery element
                 document.querySelector('.gallery').appendChild(column);
               }
-              // Create a video element with the src and alt attributes
+
               var video = document.createElement('video');
-              video.src = `assets/video${i}.mp4`;
+              video.dataset.src = `assets/video${i}.mp4`; // Use data-src for lazy loading
               video.alt = `Video ${i}`;
-              // Append the video element to the last column element
+              video.preload = 'auto';
+              video.muted = true;
+              video.playsInline = true;
+              video.loading = 'lazy';
               column.appendChild(video);
             }
-          </script>
 
+            // Lazy load with intersection observer
+            var observer = new IntersectionObserver(function(entries) {
+              entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                  var video = entry.target;
+                  video.src = video.dataset.src;
+                  video.load();
+                  observer.unobserve(video);
+                }
+              });
+            });
+
+            document.querySelectorAll('video').forEach(video => {
+              observer.observe(video);
+            });
+          </script>
         </article>
       </div>
+      
       <div id="about" class="tabcontent">
-          <p>Welcome to my website! I’m a Software Developer and like to have fun with 3D graphics and animations.</p>
-        </div>
-        <div id="contact" class="tabcontent">
+        <p>Welcome to my website! I’m a Software Developer and like to have fun with 3D graphics and animations.</p>
+      </div>
+      
+      <div id="contact" class="tabcontent">
+        <p>If you want to get in touch, you can find me on <a href="https://www.linkedin.com/in/yonatan-mamo-07b426137/" target="_blank"><i class="fab fa-linkedin"></i> LinkedIn</a>, <a href="https://www.instagram.com/yonatan.gm/" target="_blank"><i class="fab fa-instagram"></i> Instagram</a>, or send me an email at <i class="far fa-envelope"></i> girmayonatan86@gmail.com.</p>
+      </div>
 
-          <p>If you want to get in touch, you can find me on <a href="https://www.linkedin.com/in/yonatan-mamo-07b426137/" target="_blank"><i class="fab fa-linkedin"></i> LinkedIn</a>, <a href="https://www.instagram.com/yonatan.gm/" target="_blank"><i class="fab fa-instagram"></i> Instagram</a>, or send me an email at <i class="far fa-envelope"></i> girmayonatan86@gmail.com.</p>
-        </div>
-    <!-- added a video element to display the full-size video -->
-<!--    <video class="displayed-vid" src="" alt="" muted></video>-->
-    <!-- Used a semantic HTML element -->
     <footer class="overlay"></footer>
     <button class="dark"></button>
     
-    <!-- moved the script tag to the end of the body tag -->
     <script src="index.js"></script>
     <script>
       /* Added these lines to create the overlapping and depth effect */
