@@ -79,17 +79,79 @@
             color: #1DB954; /* Spotify green for section titles */
             padding: 0 5px;
         }
-        /* Optional: styling for the arrow if you still want it somewhere else
-        .arrow {
-            margin: 20px 0;
-            text-align: center;
-            font-size: 18px;
-            color: white;
+
+        /* Mobile-specific styles */
+        @media screen and (max-width: 768px) {
+            body {
+                justify-content: flex-start; /* Align content to the top for natural scrolling */
+                padding: 40px; /* Add padding around the body for breathing space */
+            }
+
+            .intro {
+                max-width: 100%; /* Utilize full screen width on mobile */
+                margin: 20px 0; /* Reduce top and bottom margin */
+                padding: 0 10px; /* Add horizontal padding for better spacing */
+            }
+
+            .divider {
+                font-size: 30px; /* Slightly larger font for better readability */
+                padding: 0 10px; /* Add horizontal padding */
+            }
+
+            .single-item-section {
+                display: block; /* Stack sections vertically */
+                width: 100%; /* Full width on mobile */
+                margin: 15px 0; /* Increased spacing between sections */
+                padding: 0 10px; /* Add horizontal padding */
+            }
+
+            .section {
+                display: grid;
+                grid-template-columns: 1fr; /* Single column layout on mobile */
+                gap: 15px; /* Slightly reduced gap for better fit */
+                padding: 0 10px; /* Adjust padding for smaller screens */
+            }
+
+            .card {
+                width: 100%; /* Ensure cards take full width */
+                max-width: none; /* Remove max-width to utilize full container width */
+            }
+
+            .card-description {
+                font-size: 25px; /* Maintain readability */
+                padding: 12px; /* Adjust padding for better spacing */
+            }
+
+            /* Adjust video container for better fit on mobile */
+            .video-container video {
+                border-radius: 10px; /* Uniform border radius */
+            }
         }
-        .arrow span {
-            color: #1DB954;
+
+        /* Additional adjustments for very small screens */
+        @media screen and (max-width: 480px) {
+            body {
+                padding: 15px; /* Slightly reduce padding for very small screens */
+            }
+
+            .divider {
+                font-size: 18px;
+                padding: 0 5px; /* Reduce horizontal padding */
+            }
+
+            .card-description {
+                font-size: 13px;
+                padding: 10px;
+            }
+
+            .intro h1 {
+                font-size: 24px;
+            }
+
+            .intro p {
+                font-size: 14px;
+            }
         }
-        */
     </style>
 </head>
 <body>
