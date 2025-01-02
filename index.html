@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Your Name</title>
+  <title>Yonatan Mamo</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -14,7 +14,9 @@
       <section class="menu">
         <article><a href="#about">About</a></article>
         <article><a href="#3d" class="active">3D</a></article>
-        <!-- <article><a href="projects/spotify-uiux/index.html">UI/UX</a></article> -->
+        <!-- <article>
+          <a href="projects/spotify-uiux/index.html" target="_self">UI/UX</a>
+        </article> -->
         <article><a href="#contact">Contact</a></article>
         <!-- New UI/UX Tab -->
 
@@ -25,7 +27,7 @@
     // Force the "UI/UX" link to open in a new tab
     document.querySelector('a[href="projects/spotify-uiux/index.html"]').addEventListener('click', function (e) {
       e.preventDefault(); // Prevent default anchor behavior
-      window.open(this.href, '_blank'); // Open the link in a new tab
+      window.open(this.href, target="_self"); // Open the link in a new tab
     });
   </script>
   <section class="main">
