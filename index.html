@@ -14,7 +14,7 @@
       <section class="menu">
         <article><a href="#about">About</a></article>
         <article><a href="#3d" class="active">3D</a></article>
-        <article><a href="projects/spotify-uiux/index.html">UI/UX</a></article>
+        <!-- <article><a href="projects/spotify-uiux/index.html">UI/UX</a></article> -->
         <article><a href="#contact">Contact</a></article>
         <!-- New UI/UX Tab -->
 
@@ -23,10 +23,10 @@
   </header>
   <script>
     // Force the "UI/UX" link to open in a new tab
-    // document.querySelector('a[href="projects/spotify-uiux/index.html"]').addEventListener('click', function (e) {
-      // e.preventDefault(); // Prevent default anchor behavior
-      // window.open(this.href, '_blank'); // Open the link in a new tab
-    // });
+    document.querySelector('a[href="projects/spotify-uiux/index.html"]').addEventListener('click', function (e) {
+      e.preventDefault(); // Prevent default anchor behavior
+      window.open(this.href, '_blank'); // Open the link in a new tab
+    });
   </script>
   <section class="main">
     <div id="3d" class="tabcontent">
