@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat for Spotify – UX</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: "Helvetica Neue", Arial, sans-serif;
+            color: white;
+            background: linear-gradient(135deg, #121212, #282828);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        h1, h2 {
+            color: #1DB954; /* Spotify Green */
+        }
+        .intro {
+            max-width: 800px;
+            text-align: center;
+            margin: 40px auto;
+        }
+        .section {
+            max-width: 900px;
+            margin: 20px auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            padding: 0 20px;
+        }
+        .single-item-section {
+            display: inline-block; /* Allows sections to align side by side */
+            width: calc(25% - 10px); /* Ensures each takes half the row width with spacing */
+            vertical-align: top; /* Aligns them to the top */
+            margin: 10px 0; /* Adds spacing between sections */
+        }
+        .card {
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+            position: relative;
+        }
+        .image-container,
+        .video-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+        .image-container img, .video-container video {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 10px 10px 0 0;
+        }
+        .card-description {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            right: 10px;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 10px;
+            font-size: 14px;
+            border-radius: 0 0 5px 5px;
+            box-sizing: border-box;
+            color: white;
+        }
+        .divider {
+            margin: 20px 0;
+            text-align: center;
+            font-size: 18px;
+            color: white;
+        }
+        .divider span {
+            color: #1DB954; /* Spotify green for section titles */
+            padding: 0 5px;
+        }
+        /* Optional: styling for the arrow if you still want it somewhere else
+        .arrow {
+            margin: 20px 0;
+            text-align: center;
+            font-size: 18px;
+            color: white;
+        }
+        .arrow span {
+            color: #1DB954;
+        }
+        */
+    </style>
+</head>
+<body>
+    <div class="intro">
+        <h1>Chat for Spotify – UI/UX</h1>
+        <p>
+            Hey there! This started as an iOS app built in SwiftUI and was live for a good while, tapping into Spotify APIs
+            so people could discover new friends through shared music. I’ve since retired it.
+            Below are some screens and quick insights into what I did and why.
+        </p>
+    </div>
+
+    <!-- Icon -->
+    <div class="divider">1 <span>Icon</span> </div>
+    <div class="single-item-section">
+        <div class="card">
+            <div class="image-container">
+                <img src="assets/images/1024x1024bb.png" alt="App Icon">
+                <div class="card-description">
+                    The icon was modelled in Houdini. I was going for a slightly skeuomorphic look with reflective surfaces. It's subtle, but I love the glossy effect.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Login -->
+    <div class="divider">2 <span>Login</span> </div>
+    <div class="single-item-section">
+        <div class="card">
+            <div class="image-container">
+                <img src="assets/images/login.png" alt="Login Screen">
+                <div class="card-description">
+                    Simple login with Spotify. Dark gradient background so everything else pops out and to channel Spotify's vibe.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Screen -->
+    <div class="divider">3 <span>Main Screen</span> </div>
+    <div class="section">
+        <div class="card">
+            <div class="image-container">
+                <img src="assets/images/0x0ss.png" alt="Matchmaking and Suggestions">
+                <div class="card-description">
+                    You can scroll horizontally to see recommended tracks, artists, or new people—horizontal scroll is kinda a recurring theme throughout the app.
+                    The little artist icons under the users are scrollable too and offer a quick preview of the user's favorites.
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="image-container">
+                <img src="assets/images/0x0ss-2.png" alt="Recommendations Screen">
+                <div class="card-description">
+                    Recommendations show album art, plus play/like buttons powered by Spotify.
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="image-container">
+                <img src="assets/images/0x0ss-5.png" alt="Find Friends Screen">
+                <div class="card-description">
+                    The “Find” bar at the bottom (safari style). As you type in any artist or track, you’ll see keywords appear as horizontal chips above it, and a matching set of user cards
+                    just above that.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Chat and Group Features -->
+    <div class="divider">4 <span>Chat and Group </span> </div>
+    <div class="section">
+        <div class="card">
+            <div class="image-container">
+                <img src="assets/images/0x0ss-7.png" alt="Conversations List">
+                <div class="card-description">
+                    This is the active chats view. Each conversation card shows user avatars + genres. Accept invites with one tap—makes it easy to jump into chats.
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="image-container">
+                <img src="assets/images/0x0ss-8.png" alt="Group Chat">
+                <div class="card-description">
+                    Group chats list all participants in these little user “bubbles” up top (it's scrollable too). Pulling that off in Swift with dynamic profiles was a bit tricky, but worth it for the look.
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="image-container">
+                <img src="assets/images/0x0ss-6.png" alt="Group Creation Screen">
+                <div class="card-description">
+                    Group creation uses the same horizontally scrollable system. You type in track or artist names,
+                    those keywords appear as little capsules, and matching people show up above. Avatars are removable
+                    if you change your mind.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- User Profiles -->
+    <div class="divider">5 <span>User Profiles</span> </div>
+    <div class="section">
+        <div class="card">
+            <div class="image-container">
+                <img src="assets/images/0x0ss-4.png" alt="User Profile - Self">
+                <div class="card-description">
+                    For the profile page, I layered a grid of album art behind the user icon.
+                    It’s got a subtle color-bleeding animation, inspired by old iTunes. There’s also a sparkly button that spits out cursive AI generated bio.
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="image-container">
+                <img src="assets/images/0x0ss-3.png" alt="User Profile - Others">
+                <div class="card-description">
+                    Other users’ profiles also show their favorite artists, genres,
+                    and a short bio.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Preview Clips -->
+    <div class="divider">6 <span>Preview Clips</span> </div>
+    <div class="section">
+        <!-- We transform each video into a card -->
+        <div class="card">
+            <div class="video-container">
+                <video controls>
+                    <source src="assets/videos/screen1.mp4" type="video/mp4">
+                    <!-- fallback text -->
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="card">
+            <div class="video-container">
+                <video controls>
+                    <source src="assets/videos/output.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <!-- If you have a third video, just add another .card -->
+        <!--
+        <div class="card">
+            <div class="video-container">
+                <video controls>
+                    <source src="preview-3.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        -->
+    </div>
+</body>
+</html>
