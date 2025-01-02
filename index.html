@@ -14,60 +14,69 @@
       <section class="menu">
         <article><a href="#about">About</a></article>
         <article><a href="#3d" class="active">3D</a></article>
+        <article><a href="projects/spotify-uiux/index.html">UI/UX</a></article>
         <article><a href="#contact">Contact</a></article>
+        <!-- New UI/UX Tab -->
+
       </section>
     </nav>
   </header>
-
+  <script>
+    // Force the "UI/UX" link to open in a new tab
+    // document.querySelector('a[href="projects/spotify-uiux/index.html"]').addEventListener('click', function (e) {
+      // e.preventDefault(); // Prevent default anchor behavior
+      // window.open(this.href, '_blank'); // Open the link in a new tab
+    // });
+  </script>
   <section class="main">
-      <div id="3d" class="tabcontent">
-        <article class="gallery">
-          <script>
-            const numVideos = 18;
+    <div id="3d" class="tabcontent">
+      <article class="gallery">
+        <script>
+          const numVideos = 18;
 
-            for (let i = 0; i < numVideos; i++) {
-              if (i % 2 === 0) {
-                var column = document.createElement('div');
-                column.className = 'column';
-                document.querySelector('.gallery').appendChild(column);
-              }
-
-              var video = document.createElement('video');
-              video.dataset.src = `assets/video${i}.mp4`; // Use data-src for lazy loading
-              video.alt = `Video ${i}`;
-              video.preload = 'auto';
-              video.muted = true;
-              video.playsInline = true;
-              video.loading = 'lazy';
-              column.appendChild(video);
+          for (let i = 0; i < numVideos; i++) {
+            if (i % 2 === 0) {
+              var column = document.createElement('div');
+              column.className = 'column';
+              document.querySelector('.gallery').appendChild(column);
             }
 
-            // Lazy load with intersection observer
-            var observer = new IntersectionObserver(function(entries) {
-              entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                  var video = entry.target;
-                  video.src = video.dataset.src;
-                  video.load();
-                  observer.unobserve(video);
-                }
-              });
+            var video = document.createElement('video');
+            video.dataset.src = `assets/video${i}.mp4`; // Use data-src for lazy loading
+            video.alt = `Video ${i}`;
+            video.preload = 'auto';
+            video.muted = true;
+            video.playsInline = true;
+            video.loading = 'lazy';
+            column.appendChild(video);
+          }
+
+          // Lazy load with intersection observer
+          var observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+              if (entry.isIntersecting) {
+                var video = entry.target;
+                video.src = video.dataset.src;
+                video.load();
+                observer.unobserve(video);
+              }
             });
+          });
 
-            document.querySelectorAll('video').forEach(video => {
-              observer.observe(video);
-            });
-          </script>
-        </article>
-      </div>
+          document.querySelectorAll('video').forEach(video => {
+            observer.observe(video);
+          });
+        </script>
+      </article>
+    </div>
 
-      <div id="about" class="tabcontent">
-        <p>Welcome to my website!</p>
-      </div>
+    <div id="about" class="tabcontent">
+      <p>Welcome to my website!</p>
+    </div>
 
-      <div id="contact" class="tabcontent">
-        <p>If you want to get in touch, you can find me on <a href="https://www.linkedin.com/in/yonatan-mamo-07b426137/" target="_blank"><i class="fab fa-linkedin"></i> LinkedIn</a>, <a href="https://www.instagram.com/yonatan.gm/" target="_blank"><i class="fab fa-instagram"></i> Instagram</a>, or send me an email at <i class="far fa-envelope"></i> girmayonatan86@gmail.com.</p>
-      </div>
+    <div id="contact" class="tabcontent">
+      <p>If you want to get in touch, you can find me on <a href="https://www.linkedin.com/in/yonatan-mamo-07b426137/" target="_blank"><i class="fab fa-linkedin"></i> LinkedIn</a>, <a href="https://www.instagram.com/yonatan.gm/" target="_blank"><i class="fab fa-instagram"></i> Instagram</a>, or send me an email at <i class="far fa-envelope"></i> girmayonatan86@gmail.com.</p>
+    </div>
 
     <footer class="overlay"></footer>
     <button class="dark"></button>
