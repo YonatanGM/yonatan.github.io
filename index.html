@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8"/>
+  <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-  <title>Yonatan Mamo - Multi-Column Vertical Stacks</title>
+  <title>Yonatan Mamo - 4-Column Vertical Layout with Lazy Load</title>
 
   <style>
     /* RESET */
@@ -32,7 +32,7 @@
       padding: 2rem;
       transition: padding 0.5s ease;
       max-width: 1200px;
-      margin: 0 auto;
+      margin: 0 auto; /* horizontally centered hero */
     }
     .hero-container.shrink {
       padding: 1rem;
@@ -82,7 +82,7 @@
       gap: 0.3rem;
     }
     .contact-icon {
-      width: 16px; 
+      width: 16px;
       height: 16px;
       background-color: #888;
       border-radius: 50%;
@@ -126,51 +126,49 @@
 
     /*************************************************************
      * 4-FLEX-COLUMN LAYOUT => each column is a vertical stack
-     * We'll use display:flex for the container (HStack),
-     * and for each column (VStack).
-     * We'll also do media queries to reduce columns on smaller screens.
+     * We'll do media queries for 1 col on phone, 2 on tablet, 4 on desktop
      *************************************************************/
     .multi-column {
       display: flex;
       width: 100%;
-      /* no horizontal gap => if you want a small gap between columns, add e.g. gap:1rem; */
     }
     .col {
       display: flex;
       flex-direction: column;
-      /* no vertical gap => videos stack directly */
+      /* no vertical gap => videos stack with no space in between */
     }
 
-    /* On phone => 1 column */
+    /* 1 column on phone (≤767px) */
     @media (max-width: 767px) {
       .multi-column {
-        flex-wrap: wrap; /* break into multiple rows if needed */
+        flex-wrap: wrap;
       }
       .col {
-        width: 100%; /* 1 column */
+        width: 100%;
       }
     }
-    /* On tablet => 2 columns */
+    /* 2 columns on tablet (768px-1023px) */
     @media (min-width: 768px) and (max-width: 1023px) {
       .col {
         width: 50%;
       }
     }
-    /* On desktop => 4 columns */
+    /* 4 columns on desktop (≥1024px) */
     @media (min-width: 1024px) {
       .col {
         width: 25%;
       }
     }
 
-    /* VIDEO => standard rectangle */
+    /*************************************************************
+     * Videos => standard rectangles
+     *************************************************************/
     .rect-video {
       width: 100%;
       cursor: pointer;
       background-color: #222;
       transition: transform 0.3s;
     }
-    /* On hover => scale only that video */
     .rect-video:hover {
       transform: scale(1.04);
     }
@@ -205,7 +203,7 @@
       display: block;
       max-width: 100%;
       max-height: 100%;
-      object-fit: contain; /* preserve aspect ratio for non-square videos */
+      object-fit: contain;
     }
     .close-btn {
       position: absolute;
@@ -229,8 +227,10 @@
         Hello, I’m Yonatan<span class="animate-dots"></span>
       </h1>
       <div class="hero-about">
-        I’m a 3D designer and UI/UX enthusiast. Below are my 3D and TouchDesigner
-        videos arranged in 4 vertical columns on desktop, stacked with no gaps.
+        I’m a 3D designer and UI/UX enthusiast. Here are 3D & TouchDesigner videos
+        in 4 vertical stacks on desktop, each column stacked with no vertical gap.
+        Hover to play; on desktop, click to see a bigger overlay. On mobile, lazy loading
+        ensures thumbnails appear.
       </div>
       <div class="contact-row">
         <a href="mailto:girmayonatan86@gmail.com"><span class="contact-icon"></span>Email</a>
@@ -252,9 +252,8 @@
   <!-- 3D SECTION -->
   <section id="section-3d">
     <h2>3D</h2>
-    <!-- The 4-FLEX-COLUMN container -->
     <div class="multi-column" id="multiCol3D">
-      <!-- 4 empty columns for 3D (they’ll be filled with videos) -->
+      <!-- 4 columns to fill with videos (i % 4 decides which col) -->
       <div class="col"></div>
       <div class="col"></div>
       <div class="col"></div>
@@ -262,10 +261,9 @@
     </div>
   </section>
 
-  <!-- TOUCH SECTION -->
+  <!-- TOUCH DESIGNER SECTION -->
   <section id="section-touch">
     <h2>TouchDesigner</h2>
-    <!-- Another 4-FLEX-COLUMN container -->
     <div class="multi-column" id="multiColTouch">
       <div class="col"></div>
       <div class="col"></div>
@@ -274,7 +272,7 @@
     </div>
   </section>
 
-  <!-- DESKTOP-ONLY OVERLAY -->
+  <!-- DESKTOP OVERLAY -->
   <div class="overlay" id="desktopOverlay">
     <div class="overlay-content">
       <button class="close-btn" id="closeBtn">X</button>
@@ -298,46 +296,64 @@
 
   <script>
     /*************************************************************
-     * 2) FILL 4 COLUMNS FOR 3D & TOUCH
-     * We have 18 videos each. We'll distribute them:
-     * e.g. video0 -> col0, video1->col1, video2->col2, video3->col3,
-     * then video4->col0, etc. So they're stacked vertically in each col.
+     * 2) FILL THE 4 COLUMNS PER SECTION WITH 18 LAZY-LOADED VIDEOS
      *************************************************************/
     const threeDCount = 18;
     const touchCount = 18;
-    const multiCol3D = document.getElementById('multiCol3D').children; // the 4 .col divs
+    const multiCol3D = document.getElementById('multiCol3D').children; // 4 .col
     const multiColTouch = document.getElementById('multiColTouch').children;
 
-    // for 3D
+    // 3D
     for (let i = 0; i < threeDCount; i++) {
       const vid = document.createElement('video');
       vid.className = 'rect-video';
-      vid.src = `assets/video${i}.mp4`; 
+      // lazy load => store real src in data-src
+      vid.dataset.src = `assets/video${i}.mp4`;
+      vid.preload = 'auto';  // ensures metadata for thumbnail
       vid.muted = true;
       vid.playsInline = true;
-      // find which column => i % 4
-      const colIndex = i % 4; 
-      multiCol3D[colIndex].appendChild(vid);
+      vid.loading = 'lazy';  // hint for mobile
+      // decide which column => i % 4
+      multiCol3D[i % 4].appendChild(vid);
     }
 
-    // for TouchDesigner
+    // Touch
     for (let i = 0; i < touchCount; i++) {
       const vid = document.createElement('video');
       vid.className = 'rect-video';
-      vid.src = `assets/touchVideo${i}.mp4`; 
+      vid.dataset.src = `assets/touchVideo${i}.mp4`;
+      vid.preload = 'auto';
       vid.muted = true;
       vid.playsInline = true;
-      const colIndex = i % 4;
-      multiColTouch[colIndex].appendChild(vid);
+      vid.loading = 'lazy';
+      multiColTouch[i % 4].appendChild(vid);
     }
-
-    // gather all videos for next steps
-    const allVids = document.querySelectorAll('.rect-video');
   </script>
 
   <script>
     /*************************************************************
-     * 3) SCROLL TILT ONLY FOR NON-DESKTOP
+     * 3) LAZY LOADING with IntersectionObserver
+     *************************************************************/
+    const allVids = document.querySelectorAll('.rect-video');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const video = entry.target;
+          // set actual src
+          if (video.dataset.src) {
+            video.src = video.dataset.src;
+            video.load(); // triggers thumbnail load
+          }
+          observer.unobserve(video);
+        }
+      });
+    });
+    allVids.forEach(vid => observer.observe(vid));
+  </script>
+
+  <script>
+    /*************************************************************
+     * 4) SCROLL TILT ONLY FOR NON-DESKTOP
      *************************************************************/
     function enableTiltForNonDesktop() {
       if (window.innerWidth >= 1024) {
@@ -346,7 +362,7 @@
         // reset transforms
         allVids.forEach(vid => { vid.style.transform = ''; });
       } else {
-        // add tilt
+        // add tilt on smaller
         window.addEventListener('scroll', tiltHandler);
       }
     }
@@ -366,11 +382,11 @@
 
   <script>
     /*************************************************************
-     * 4) HOVER-TO-PLAY, LEAVE-TO-PAUSE
+     * 5) HOVER-TO-PLAY / LEAVE-TO-PAUSE
      *************************************************************/
     allVids.forEach(video => {
       video.addEventListener('mouseover', e => {
-        e.currentTarget.muted = true; 
+        e.currentTarget.muted = true;
         try { e.currentTarget.play(); }
         catch(err) { if (err.name !== "AbortError") console.log(err); }
       });
@@ -383,7 +399,7 @@
 
   <script>
     /*************************************************************
-     * 5) DESKTOP-ONLY OVERLAY
+     * 6) DESKTOP-ONLY OVERLAY
      *************************************************************/
     const desktopOverlay = document.getElementById('desktopOverlay');
     const overlayVideo = document.getElementById('overlayVideo');
@@ -392,7 +408,7 @@
     function handleDesktopClick(e) {
       if (window.innerWidth >= 1024) {
         desktopOverlay.classList.add('active');
-        overlayVideo.src = e.currentTarget.src; 
+        overlayVideo.src = e.currentTarget.src;
         overlayVideo.play();
       }
     }
@@ -409,7 +425,7 @@
 
   <script>
     /*************************************************************
-     * 6) TOUCH EVENTS (MOBILE)
+     * 7) TOUCH EVENTS (MOBILE)
      *************************************************************/
     let mediaQuery = window.matchMedia('(max-width: 600px)');
     function handleMediaQuery(mq) {
