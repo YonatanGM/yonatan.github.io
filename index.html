@@ -48,6 +48,11 @@
     .hero-container.shrink {
       padding: 1rem;
     }
+    @media (max-width: 768px) { /* Target devices with a width of 768px or less */
+      .hero-container.shrink {
+        padding: 0.2rem; /* Smaller padding for mobile */
+      }
+    }
 
     /* Animated pop for hero title letters */
     .hero-title {
@@ -145,21 +150,13 @@
     /************************************************************
      * SECTION TITLES => vertical on desktop, normal on mobile
      ************************************************************/
-     .section-title {
-      display: grid;
-
-      /* place-items: center; Center text */
-      left: 0;
-      top: 0%;
-      font-size: 14vw; /* Scale font size dynamically with viewport width */
-      max-width: 100%; /* Fit within the container */
-      white-space: nowrap; /* No wrapping */
-      overflow: hidden; /* Prevent overflow */
-      margin: 0; /* no margin since it's absolute */
-      opacity: 0.2; /* subtle wide font effect? up to you */
-      z-index: 3;
+    .section-title {
+      margin-bottom: 1rem;
+      font-size: 1.4rem;
+      font-weight: 600;
+      text-align: center;
+      color: #fff;
     }
-
     /* On desktop => we rotate it vertically on the left side */
     @media (min-width: 1024px) {
       .section-title {
