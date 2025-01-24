@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-  <title>Yonatan Mamo - 4 Columns with Press-and-Hold on Mobile</title>
+  <title>Yonatan Mamo - 4 Columns, Stacked Cards</title>
 
   <style>
     /* RESET */
@@ -12,59 +12,68 @@
       padding: 0;
       box-sizing: border-box;
     }
+
+    /* BODY => White margins on sides => we do max-width container */
     body {
       font-family: "Helvetica Neue", sans-serif;
-      background-color: #fff;
+      background-color: #f9f9f9; /* overall page white */
       color: #000;
       overflow-x: hidden;
     }
 
-    /*************************************************************
-     * STICKY HERO (Black, bottom-rounded corners)
-     *************************************************************/
+    /************************************************************
+     * A) PAGE WRAPPER => limit width, center => white margins
+     ************************************************************/
+    .page-wrapper {
+      max-width: 1200px;
+      margin: 0 auto;
+      position: relative; /* so we can position things inside if needed */
+    }
+
+    /************************************************************
+     * STICKY HERO (BLACK)
+     ************************************************************/
     .hero-container {
       position: sticky;
       top: 0; left: 0; right: 0;
       background-color: #000;
-      color: #fff;
-      border-radius: 0 0 20px 20px;
+      border-radius: 0 0 20px 20px; /* bottom corners */
       z-index: 2000;
       padding: 2rem;
       transition: padding 0.5s ease;
-      max-width: 1200px;
-      margin: 0 auto;
+      color: #fff;
     }
     .hero-container.shrink {
       padding: 1rem;
     }
 
+    /* Animated pop for hero title letters */
     .hero-title {
+      display: inline-block;
       font-size: 2rem;
       font-weight: 700;
       margin-bottom: 1rem;
+      color: #fff;
     }
-    .animate-dots::after {
-      content: "...";
+    .hero-title .letter {
       display: inline-block;
-      animation: blinkDots 1.5s infinite steps(1, end);
-      margin-left: 2px;
+      transform: scale(0.8);
+      animation: popIn 0.5s ease forwards;
     }
-    @keyframes blinkDots {
-      0%, 20% { opacity: 1; }
-      50% { opacity: 0; }
-      100% { opacity: 1; }
+    @keyframes popIn {
+      to { transform: scale(1); }
     }
 
     .hero-container.shrink .hero-about,
     .hero-container.shrink .contact-row {
-      display: none;
+      display: none; /* hide about/contact fully in shrink mode */
     }
     .hero-about {
-      max-width: 600px;
       line-height: 1.5;
       font-size: 0.95rem;
       color: #ccc;
       margin-bottom: 1.5rem;
+      max-width: 600px;
     }
     .contact-row {
       display: flex;
@@ -108,33 +117,68 @@
       background-color: #444;
     }
 
-    /*************************************************************
-     * SECTIONS (3D & TouchDesigner)
-     *************************************************************/
-    section {
-      max-width: 1200px;
-      margin: 2rem auto;
-      padding: 0 1rem;
-    }
-    section h2 {
-      font-size: 1.4rem;
-      font-weight: 600;
-      margin-bottom: 1rem;
-      text-align: center;
-      color: #000;
+    /************************************************************
+     * SECTION CARDS
+     ************************************************************/
+    /* We'll place them inside the .page-wrapper so they share the same left/right margins. */
+    .section-card {
+      position: relative;
+      margin-top: -40px; /* so it overlaps the previous card's bottom corners */
+      padding-top: 10rem; /* extra top space => see the color above the gallery */
+      padding-bottom: 0rem; /* see color below gallery => ensure corners visible */
+      border-radius: 0 0 20px 20px;
+      overflow: hidden; /* ensures no video protrudes outside if taller */
+      color: #fff; /* or #000 if you prefer, but typically white on color */
     }
 
-    /*************************************************************
-     * 4-FLEX-COLUMN LAYOUT => each column is a vertical stack
-     *************************************************************/
+    /* 3D => red card */
+    .card-3d {
+      background-color: #e74c3c; /* red */
+      /* z-index: 9999999; */
+    }
+    /* Touch => blue card */
+    .card-touch {
+      background-color: #3498db; /* blue */
+      z-index: -1;
+    }
+
+    /************************************************************
+     * SECTION TITLES => vertical on desktop, normal on mobile
+     ************************************************************/
+    .section-title {
+      margin-bottom: 1rem;
+      font-size: 1.4rem;
+      font-weight: 600;
+      text-align: center;
+      color: #fff;
+    }
+    /* On desktop => we rotate it vertically on the left side */
+    @media (min-width: 1024px) {
+      .section-title {
+        position: absolute;
+        /* writing-mode: vertical-rl; rotate text 90deg to the left */
+        /* transform: rotate(-90deg); so top is the original left side up */
+        left: 0;
+        top: 0%;
+        /* transform-origin: center; */
+        font-size: 10rem;
+        /* text-align: left; */
+        margin: 0; /* no margin since it's absolute */
+        opacity: 0.2; /* subtle wide font effect? up to you */
+      }
+    }
+
+    /************************************************************
+     * 4-FLEX-COLUMN LAYOUT => no side padding => fill card width
+     ************************************************************/
     .multi-column {
       display: flex;
       width: 100%;
+      /* no padding => videos fill the entire card horizontally */
     }
     .col {
       display: flex;
       flex-direction: column;
-      /* no vertical gap => videos stacked */
     }
 
     /* 1 column on phone (≤767px) */
@@ -143,7 +187,7 @@
         flex-wrap: wrap;
       }
       .col {
-        width: 50%;
+        width: 100%;
       }
     }
     /* 2 columns on tablet (768px-1023px) */
@@ -159,23 +203,19 @@
       }
     }
 
-    /*************************************************************
-     * Videos => standard rectangles
-     *************************************************************/
     .rect-video {
       width: 100%;
       cursor: pointer;
       background-color: #222;
       transition: transform 0.3s;
     }
-    /* On hover => scale only that video (desktop hover) */
     .rect-video:hover {
       transform: scale(1.04);
     }
 
-    /*************************************************************
-     * DESKTOP-ONLY OVERLAY
-     *************************************************************/
+    /************************************************************
+     * DESKTOP OVERLAY
+     ************************************************************/
     .overlay {
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
@@ -218,57 +258,58 @@
     }
   </style>
 </head>
-
 <body>
-  <!-- STICKY HERO -->
-  <div class="hero-container" id="heroContainer">
-    <div class="hero-content">
-      <h1 class="hero-title">
-        Hello, I’m Yonatan<span class="animate-dots"></span>
-      </h1>
-      <div class="hero-about">
-        I’m a 3D designer and UI/UX enthusiast. Scroll to see my 3D & TouchDesigner videos in
-        4 columns on desktop. On mobile, press-and-hold (~500ms) starts playing a video
-        without blocking scroll. Release to pause.
-      </div>
-      <div class="contact-row">
-        <a href="mailto:girmayonatan86@gmail.com"><span class="contact-icon"></span>Email</a>
-        <a href="https://www.linkedin.com/in/yonatan-mamo-07b426137/" target="_blank">
-          <span class="contact-icon"></span>LinkedIn
-        </a>
-        <a href="https://www.instagram.com/yonatan.gm/" target="_blank">
-          <span class="contact-icon"></span>Instagram
-        </a>
-      </div>
-      <div class="nav-pills">
-        <a href="#section-3d">3D</a>
-        <a href="#section-touch">TouchDesigner</a>
-        <a href="projects/spotify-uiux/index.html" target="_blank">UI/UX</a>
-      </div>
-    </div>
-  </div>
+  <!-- PAGE WRAPPER for white side margins -->
+  <div class="page-wrapper">
 
-  <!-- 3D SECTION -->
-  <section id="section-3d">
-    <h2>3D</h2>
-    <div class="multi-column" id="multiCol3D">
-      <div class="col"></div>
-      <div class="col"></div>
-      <div class="col"></div>
-      <div class="col"></div>
+    <!-- STICKY HERO -->
+    <div class="hero-container" id="heroContainer">
+      <div class="hero-content">
+        <h1 class="hero-title" id="heroTitle"></h1>
+        <div class="hero-about">
+          I’m a 3D designer and UI/UX enthusiast. On desktop, click a video to see a bigger overlay.
+          On mobile, press-and-hold to play. Scroll to see stacked colored “cards” for 3D & TouchDesigner.
+        </div>
+        <div class="contact-row">
+          <a href="mailto:girmayonatan86@gmail.com"><span class="contact-icon"></span>Email</a>
+          <a href="https://www.linkedin.com/in/yonatan-mamo-07b426137/" target="_blank">
+            <span class="contact-icon"></span>LinkedIn
+          </a>
+          <a href="https://www.instagram.com/yonatan.gm/" target="_blank">
+            <span class="contact-icon"></span>Instagram
+          </a>
+        </div>
+        <div class="nav-pills">
+          <a href="#card3D">3D</a>
+          <a href="#cardTouch">TouchDesigner</a>
+          <a href="projects/spotify-uiux/index.html" target="_blank">UI/UX</a>
+        </div>
+      </div>
     </div>
-  </section>
 
-  <!-- TOUCH SECTION -->
-  <section id="section-touch">
-    <h2>TouchDesigner</h2>
-    <div class="multi-column" id="multiColTouch">
-      <div class="col"></div>
-      <div class="col"></div>
-      <div class="col"></div>
-      <div class="col"></div>
+    <!-- 3D CARD (Red) -->
+    <div class="section-card card-3d" id="card3D">
+      <!-- Vertical Title for Desktop -->
+      <h2 class="section-title">3D</h2>
+      <div class="multi-column" id="multiCol3D">
+        <div class="col"></div>
+        <div class="col"></div>
+        <div class="col"></div>
+        <div class="col"></div>
+      </div>
     </div>
-  </section>
+
+    <!-- TOUCH CARD (Blue) -->
+    <div class="section-card card-touch" id="cardTouch">
+      <h2 class="section-title">TouchDesigner</h2>
+      <div class="multi-column" id="multiColTouch">
+        <div class="col"></div>
+        <div class="col"></div>
+        <div class="col"></div>
+        <div class="col"></div>
+      </div>
+    </div>
+  </div> <!-- end page-wrapper -->
 
   <!-- DESKTOP OVERLAY -->
   <div class="overlay" id="desktopOverlay">
@@ -280,9 +321,48 @@
 
   <script>
     /*************************************************************
-     * 1) HERO SHRINK
+     * 1) ANIMATE HERO TITLE with “pop in” letters
      *************************************************************/
-    const heroContainer = document.getElementById('heroContainer');
+    const heroTitleEl = document.getElementById('heroTitle');
+    const heroText = "HELLO,\tI'M\tYONATAN";
+
+    function setHeroTitle(text) {
+      heroTitleEl.innerHTML = "";
+      let delay = 0;
+      for (let i = 0; i < text.length; i++) {
+        const char = text[i];
+        const span = document.createElement('span');
+        span.classList.add('letter');
+        span.style.animationName = 'popIn';
+        span.style.animationDelay = delay + 's';
+        span.innerText = char;
+        heroTitleEl.appendChild(span);
+        delay += 0.05;
+      }
+    }
+
+    setHeroTitle(heroText);
+
+    let heroContainer = document.getElementById('heroContainer');
+    let heroWasShrunk = false;
+    const observer = new MutationObserver(mutationList => {
+      mutationList.forEach(mutation => {
+        if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+          const hasShrink = heroContainer.classList.contains('shrink');
+          if (heroWasShrunk && !hasShrink) {
+            setHeroTitle(heroText);
+          }
+          heroWasShrunk = hasShrink;
+        }
+      });
+    });
+    observer.observe(heroContainer, { attributes: true });
+  </script>
+
+  <script>
+    /*************************************************************
+     * 2) HERO SHRINK ON SCROLL
+     *************************************************************/
     window.addEventListener('scroll', () => {
       if (window.scrollY > 150) {
         heroContainer.classList.add('shrink');
@@ -294,7 +374,7 @@
 
   <script>
     /*************************************************************
-     * 2) CREATE & LAZY-LOAD 18 videos for 3D, 18 for Touch
+     * 3) CREATE & LAZY-LOAD 18 videos for 3D & Touch
      *************************************************************/
     const threeDCount = 18;
     const touchCount = 18;
@@ -305,7 +385,7 @@
     for (let i = 0; i < threeDCount; i++) {
       const vid = document.createElement('video');
       vid.className = 'rect-video';
-      vid.dataset.src = `assets/video${i}.mp4`; // lazy load
+      vid.dataset.src = `assets/video${i}.mp4`;
       vid.preload = 'auto';
       vid.muted = true;
       vid.playsInline = true;
@@ -329,7 +409,7 @@
 
   <script>
     /*************************************************************
-     * 3) LAZY LOADING => IntersectionObserver
+     * 4) LAZY LOADING => IntersectionObserver
      *************************************************************/
     const lazyObserver = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
@@ -348,25 +428,24 @@
 
   <script>
     /*************************************************************
-     * 4) SCROLL TILT => only on smaller screens
+     * 5) SCROLL TILT => only on smaller screens
      *************************************************************/
     function enableTiltForNonDesktop() {
-      if (window.innerWidth >= 1024) {
-        // remove tilt
-        window.removeEventListener('scroll', tiltHandler);
-        allVids.forEach(vid => vid.style.transform = '');
-      } else {
-        // add tilt
-        window.addEventListener('scroll', tiltHandler);
-      }
+      // if (window.innerWidth >= 1024) {
+      //   window.removeEventListener('scroll', tiltHandler);
+      //   allVids.forEach(vid => vid.style.transform = '');
+      // } else {
+      //   window.addEventListener('scroll', tiltHandler);
+      // }
+      window.addEventListener('scroll', tiltHandler);
     }
     function tiltHandler() {
       allVids.forEach(video => {
         const rect = video.getBoundingClientRect();
         const distance = window.innerHeight - rect.bottom;
         const maxDistance = 300;
-        let angle = (distance / maxDistance) * 20;
-        angle = Math.max(0, Math.min(100, angle));
+        let angle = (distance / maxDistance) * 10;
+        angle = Math.max(0, Math.min(200, angle));
         video.style.transform = `rotateY(${angle}deg)`;
       });
     }
@@ -376,7 +455,7 @@
 
   <script>
     /*************************************************************
-     * 5) HOVER-TO-PLAY => Desktop mouseover / mouseleave
+     * 6) HOVER-TO-PLAY => Desktop
      *************************************************************/
     allVids.forEach(video => {
       video.addEventListener('mouseover', e => {
@@ -393,7 +472,7 @@
 
   <script>
     /*************************************************************
-     * 6) DESKTOP-ONLY OVERLAY on click
+     * 7) DESKTOP OVERLAY => click
      *************************************************************/
     const desktopOverlay = document.getElementById('desktopOverlay');
     const overlayVideo = document.getElementById('overlayVideo');
@@ -419,79 +498,65 @@
 
   <script>
     /*************************************************************
-     * 7) MOBILE PRESS-AND-HOLD (500ms) => play
-     *    Release => pause, but if user moves finger => cancel
-     *    No e.preventDefault => scrolling works
+     * 8) MOBILE PRESS-AND-HOLD => play
      *************************************************************/
-    // let mediaQuery = window.matchMedia('(max-width: 600px)');
-    // function handleMobileHold(mq) {
-    //   allVids.forEach(video => {
-    //     // remove old listeners first
-    //     video.removeEventListener('touchstart', onTouchStart);
-    //     video.removeEventListener('touchmove', onTouchMove);
-    //     video.removeEventListener('touchend', onTouchEnd);
-
-    //     if (mq.matches) {
-    //       video.addEventListener('touchstart', onTouchStart);
-    //       video.addEventListener('touchmove', onTouchMove);
-    //       video.addEventListener('touchend', onTouchEnd);
-    //     }
-    //   });
-    // }
+    let mediaQuery = window.matchMedia('(max-width: 600px)');
+    function handleMobileHold(mq) {
+      allVids.forEach(video => {
+        // remove old
+        video.removeEventListener('touchstart', onTouchStart);
+        video.removeEventListener('touchmove', onTouchMove);
+        video.removeEventListener('touchend', onTouchEnd);
+        if (mq.matches) {
+          video.addEventListener('touchstart', onTouchStart);
+          video.addEventListener('touchmove', onTouchMove);
+          video.addEventListener('touchend', onTouchEnd);
+        }
+      });
+    }
 
     let timer = null;
-    let startX = 0;
-    let startY = 0;
-    const threshold = 10;  // px movement allowed before cancel
-    const holdTime = 500;  // ms to hold before playing
-    let isPlaying = false; // track if the video started playing
+    let startX = 0, startY = 0;
+    const threshold = 10;
+    const holdTime = 500;
+    let isPlaying = false;
 
     function onTouchStart(e) {
-      // record start coords
       const touch = e.touches[0];
       startX = touch.clientX;
       startY = touch.clientY;
       isPlaying = false;
 
       const vid = e.currentTarget;
-      // set a timer => after holdTime, play
       timer = setTimeout(() => {
         try {
           vid.play();
           isPlaying = true;
-        } catch(err) {
-          if (err.name !== "AbortError") console.log(err);
-        }
+        } catch(err) { if (err.name !== "AbortError") console.log(err); }
       }, holdTime);
     }
 
     function onTouchMove(e) {
-      // check movement
       const touch = e.touches[0];
       const deltaX = Math.abs(touch.clientX - startX);
       const deltaY = Math.abs(touch.clientY - startY);
       if (deltaX > threshold || deltaY > threshold) {
-        // user is scrolling => cancel
         clearTimeout(timer);
       }
     }
 
     function onTouchEnd(e) {
-      // end => if we started playing => pause
       clearTimeout(timer);
       const vid = e.currentTarget;
       if (isPlaying) {
-        try {
-          vid.pause();
-        } catch(err) {
-          if (err.name !== "AbortError") console.log(err);
-        }
+        try { vid.pause(); }
+        catch(err) { if (err.name !== "AbortError") console.log(err); }
       }
       isPlaying = false;
     }
 
-  //   handleMobileHold(mediaQuery);
-  //   mediaQuery.addEventListener('change', handleMobileHold);
-  // </script>
+    handleMobileHold(mediaQuery);
+    mediaQuery.addEventListener('change', handleMobileHold);
+  </script>
 </body>
 </html>
