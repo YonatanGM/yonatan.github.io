@@ -139,11 +139,8 @@
 
     /* 1 column on phone (≤767px) */
     @media (max-width: 767px) {
-      .multi-column {
-        flex-wrap: wrap;
-      }
       .col {
-        width: 100%;
+        width: 25%;
       }
     }
     /* 2 columns on tablet (768px-1023px) */
@@ -423,21 +420,21 @@
      *    Release => pause, but if user moves finger => cancel
      *    No e.preventDefault => scrolling works
      *************************************************************/
-    let mediaQuery = window.matchMedia('(max-width: 600px)');
-    function handleMobileHold(mq) {
-      allVids.forEach(video => {
-        // remove old listeners first
-        video.removeEventListener('touchstart', onTouchStart);
-        video.removeEventListener('touchmove', onTouchMove);
-        video.removeEventListener('touchend', onTouchEnd);
+    // let mediaQuery = window.matchMedia('(max-width: 600px)');
+    // function handleMobileHold(mq) {
+    //   allVids.forEach(video => {
+    //     // remove old listeners first
+    //     video.removeEventListener('touchstart', onTouchStart);
+    //     video.removeEventListener('touchmove', onTouchMove);
+    //     video.removeEventListener('touchend', onTouchEnd);
 
-        if (mq.matches) {
-          video.addEventListener('touchstart', onTouchStart);
-          video.addEventListener('touchmove', onTouchMove);
-          video.addEventListener('touchend', onTouchEnd);
-        }
-      });
-    }
+    //     if (mq.matches) {
+    //       video.addEventListener('touchstart', onTouchStart);
+    //       video.addEventListener('touchmove', onTouchMove);
+    //       video.addEventListener('touchend', onTouchEnd);
+    //     }
+    //   });
+    // }
 
     let timer = null;
     let startX = 0;
@@ -490,8 +487,8 @@
       isPlaying = false;
     }
 
-    handleMobileHold(mediaQuery);
-    mediaQuery.addEventListener('change', handleMobileHold);
+    // handleMobileHold(mediaQuery);
+    // mediaQuery.addEventListener('change', handleMobileHold);
   </script>
 </body>
 </html>
