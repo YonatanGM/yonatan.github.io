@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-  <title>Yonatan Mamo - 4 Column Vertical Layout w/ Tap Toggle on Mobile</title>
+  <title>Yonatan Mamo - 4 Columns with Press-and-Hold on Mobile</title>
 
   <style>
     /* RESET */
@@ -19,9 +19,9 @@
       overflow-x: hidden;
     }
 
-    /**************************************************************
+    /*************************************************************
      * STICKY HERO (Black, bottom-rounded corners)
-     **************************************************************/
+     *************************************************************/
     .hero-container {
       position: sticky;
       top: 0; left: 0; right: 0;
@@ -88,7 +88,7 @@
       border-radius: 50%;
     }
 
-    /* Nav pills remain visible */
+    /* Nav pills remain visible in both states */
     .nav-pills {
       display: flex;
       gap: 0.5rem;
@@ -108,9 +108,9 @@
       background-color: #444;
     }
 
-    /**************************************************************
+    /*************************************************************
      * SECTIONS (3D & TouchDesigner)
-     **************************************************************/
+     *************************************************************/
     section {
       max-width: 1200px;
       margin: 2rem auto;
@@ -124,10 +124,9 @@
       color: #000;
     }
 
-    /**************************************************************
+    /*************************************************************
      * 4-FLEX-COLUMN LAYOUT => each column is a vertical stack
-     * We'll do media queries for 1 col on phone, 2 on tablet, 4 on desktop
-     **************************************************************/
+     *************************************************************/
     .multi-column {
       display: flex;
       width: 100%;
@@ -135,7 +134,7 @@
     .col {
       display: flex;
       flex-direction: column;
-      /* no vertical gap => videos stack with no space in between */
+      /* no vertical gap => videos stacked */
     }
 
     /* 1 column on phone (≤767px) */
@@ -160,23 +159,23 @@
       }
     }
 
-    /**************************************************************
+    /*************************************************************
      * Videos => standard rectangles
-     **************************************************************/
+     *************************************************************/
     .rect-video {
       width: 100%;
       cursor: pointer;
       background-color: #222;
       transition: transform 0.3s;
     }
-    /* On hover => scale only that video (for desktop hovers) */
+    /* On hover => scale only that video (desktop hover) */
     .rect-video:hover {
       transform: scale(1.04);
     }
 
-    /**************************************************************
+    /*************************************************************
      * DESKTOP-ONLY OVERLAY
-     **************************************************************/
+     *************************************************************/
     .overlay {
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
@@ -228,9 +227,9 @@
         Hello, I’m Yonatan<span class="animate-dots"></span>
       </h1>
       <div class="hero-about">
-        I’m a 3D designer and UI/UX enthusiast. Below, you’ll see 3D & TouchDesigner
-        videos arranged in 4 vertical stacks on desktop. Hover to play on desktop,
-        tap toggles play/pause on mobile. Desktop clicks open bigger overlay.
+        I’m a 3D designer and UI/UX enthusiast. Scroll to see my 3D & TouchDesigner videos in
+        4 columns on desktop. On mobile, press-and-hold (~500ms) starts playing a video
+        without blocking scroll. Release to pause.
       </div>
       <div class="contact-row">
         <a href="mailto:girmayonatan86@gmail.com"><span class="contact-icon"></span>Email</a>
@@ -295,26 +294,24 @@
 
   <script>
     /*************************************************************
-     * 2) FILL THE 4 COLUMNS FOR 3D & TOUCH WITH LAZY-LOAD
+     * 2) CREATE & LAZY-LOAD 18 videos for 3D, 18 for Touch
      *************************************************************/
     const threeDCount = 18;
     const touchCount = 18;
-    const multiCol3D = document.getElementById('multiCol3D').children; // the 4 .col
+    const multiCol3D = document.getElementById('multiCol3D').children;
     const multiColTouch = document.getElementById('multiColTouch').children;
 
     // fill 3D
     for (let i = 0; i < threeDCount; i++) {
       const vid = document.createElement('video');
       vid.className = 'rect-video';
-      // lazy load => store real src in data-src
-      vid.dataset.src = `assets/video${i}.mp4`;
+      vid.dataset.src = `assets/video${i}.mp4`; // lazy load
       vid.preload = 'auto';
       vid.muted = true;
       vid.playsInline = true;
       vid.loading = 'lazy';
       multiCol3D[i % 4].appendChild(vid);
     }
-
     // fill Touch
     for (let i = 0; i < touchCount; i++) {
       const vid = document.createElement('video');
@@ -355,9 +352,9 @@
      *************************************************************/
     function enableTiltForNonDesktop() {
       if (window.innerWidth >= 1024) {
-        // remove tilt on desktop
+        // remove tilt
         window.removeEventListener('scroll', tiltHandler);
-        allVids.forEach(vid => { vid.style.transform = ''; });
+        allVids.forEach(vid => vid.style.transform = '');
       } else {
         // add tilt
         window.addEventListener('scroll', tiltHandler);
@@ -379,7 +376,7 @@
 
   <script>
     /*************************************************************
-     * 5) HOVER-TO-PLAY (DESKTOP MOUSEOVER)
+     * 5) HOVER-TO-PLAY => Desktop mouseover / mouseleave
      *************************************************************/
     allVids.forEach(video => {
       video.addEventListener('mouseover', e => {
@@ -396,7 +393,7 @@
 
   <script>
     /*************************************************************
-     * 6) DESKTOP-ONLY OVERLAY (on click)
+     * 6) DESKTOP-ONLY OVERLAY on click
      *************************************************************/
     const desktopOverlay = document.getElementById('desktopOverlay');
     const overlayVideo = document.getElementById('overlayVideo');
@@ -422,36 +419,79 @@
 
   <script>
     /*************************************************************
-     * 7) MOBILE TAP => toggles play/pause
-     *   So one tap starts playing if paused, or pauses if playing.
-     *   No press-and-hold.
+     * 7) MOBILE PRESS-AND-HOLD (500ms) => play
+     *    Release => pause, but if user moves finger => cancel
+     *    No e.preventDefault => scrolling works
      *************************************************************/
     let mediaQuery = window.matchMedia('(max-width: 600px)');
-
-    function handleMobileTap(mq) {
+    function handleMobileHold(mq) {
       allVids.forEach(video => {
+        // remove old listeners first
+        video.removeEventListener('touchstart', onTouchStart);
+        video.removeEventListener('touchmove', onTouchMove);
+        video.removeEventListener('touchend', onTouchEnd);
+
         if (mq.matches) {
-          // On mobile => tap toggles
-          video.addEventListener('touchstart', onTouchToggle, {passive: false});
-        } else {
-          video.removeEventListener('touchstart', onTouchToggle);
+          video.addEventListener('touchstart', onTouchStart);
+          video.addEventListener('touchmove', onTouchMove);
+          video.addEventListener('touchend', onTouchEnd);
         }
       });
     }
 
-    function onTouchToggle(e) {
-      e.preventDefault();
+    let timer = null;
+    let startX = 0;
+    let startY = 0;
+    const threshold = 10;  // px movement allowed before cancel
+    const holdTime = 500;  // ms to hold before playing
+    let isPlaying = false; // track if the video started playing
+
+    function onTouchStart(e) {
+      // record start coords
+      const touch = e.touches[0];
+      startX = touch.clientX;
+      startY = touch.clientY;
+      isPlaying = false;
+
       const vid = e.currentTarget;
-      // if paused => play, else pause
-      if (vid.paused) {
-        try { vid.play(); } catch(err) { if (err.name !== "AbortError") console.log(err); }
-      } else {
-        try { vid.pause(); } catch(err) { if (err.name !== "AbortError") console.log(err); }
+      // set a timer => after holdTime, play
+      timer = setTimeout(() => {
+        try {
+          vid.play();
+          isPlaying = true;
+        } catch(err) {
+          if (err.name !== "AbortError") console.log(err);
+        }
+      }, holdTime);
+    }
+
+    function onTouchMove(e) {
+      // check movement
+      const touch = e.touches[0];
+      const deltaX = Math.abs(touch.clientX - startX);
+      const deltaY = Math.abs(touch.clientY - startY);
+      if (deltaX > threshold || deltaY > threshold) {
+        // user is scrolling => cancel
+        clearTimeout(timer);
       }
     }
 
-    handleMobileTap(mediaQuery);
-    mediaQuery.addEventListener('change', handleMobileTap);
+    function onTouchEnd(e) {
+      // end => if we started playing => pause
+      clearTimeout(timer);
+      const vid = e.currentTarget;
+      if (isPlaying) {
+        try {
+          vid.pause();
+        } catch(err) {
+          if (err.name !== "AbortError") console.log(err);
+        }
+      }
+      isPlaying = false;
+    }
+
+    handleMobileHold(mediaQuery);
+    mediaQuery.addEventListener('change', handleMobileHold);
   </script>
 </body>
 </html>
