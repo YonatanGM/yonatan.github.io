@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-  <title>Yonatan Mamo - 4 Vertical Columns + Lazy Load</title>
+  <title>Yonatan Mamo - 4 Column Vertical Layout w/ Tap Toggle on Mobile</title>
 
   <style>
     /* RESET */
@@ -19,9 +19,9 @@
       overflow-x: hidden;
     }
 
-    /************************************************************
+    /**************************************************************
      * STICKY HERO (Black, bottom-rounded corners)
-     ************************************************************/
+     **************************************************************/
     .hero-container {
       position: sticky;
       top: 0; left: 0; right: 0;
@@ -43,7 +43,6 @@
       font-weight: 700;
       margin-bottom: 1rem;
     }
-    /* optional trailing dots animation */
     .animate-dots::after {
       content: "...";
       display: inline-block;
@@ -56,7 +55,6 @@
       100% { opacity: 1; }
     }
 
-    /* Hide about/contact in shrink mode */
     .hero-container.shrink .hero-about,
     .hero-container.shrink .contact-row {
       display: none;
@@ -90,7 +88,7 @@
       border-radius: 50%;
     }
 
-    /* Nav pills remain visible in both states */
+    /* Nav pills remain visible */
     .nav-pills {
       display: flex;
       gap: 0.5rem;
@@ -110,9 +108,9 @@
       background-color: #444;
     }
 
-    /************************************************************
-     * SECTIONS (3D, TouchDesigner)
-     ************************************************************/
+    /**************************************************************
+     * SECTIONS (3D & TouchDesigner)
+     **************************************************************/
     section {
       max-width: 1200px;
       margin: 2rem auto;
@@ -126,10 +124,10 @@
       color: #000;
     }
 
-    /************************************************************
+    /**************************************************************
      * 4-FLEX-COLUMN LAYOUT => each column is a vertical stack
      * We'll do media queries for 1 col on phone, 2 on tablet, 4 on desktop
-     ************************************************************/
+     **************************************************************/
     .multi-column {
       display: flex;
       width: 100%;
@@ -162,23 +160,23 @@
       }
     }
 
-    /************************************************************
+    /**************************************************************
      * Videos => standard rectangles
-     ************************************************************/
+     **************************************************************/
     .rect-video {
       width: 100%;
       cursor: pointer;
       background-color: #222;
       transition: transform 0.3s;
     }
-    /* On hover => scale only that video */
+    /* On hover => scale only that video (for desktop hovers) */
     .rect-video:hover {
       transform: scale(1.04);
     }
 
-    /************************************************************
+    /**************************************************************
      * DESKTOP-ONLY OVERLAY
-     ************************************************************/
+     **************************************************************/
     .overlay {
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
@@ -231,8 +229,8 @@
       </h1>
       <div class="hero-about">
         I’m a 3D designer and UI/UX enthusiast. Below, you’ll see 3D & TouchDesigner
-        videos arranged in 4 vertical stacks on desktop. Thumbnails appear on mobile
-        via lazy loading, and tapping a video starts it immediately (no hold).
+        videos arranged in 4 vertical stacks on desktop. Hover to play on desktop,
+        tap toggles play/pause on mobile. Desktop clicks open bigger overlay.
       </div>
       <div class="contact-row">
         <a href="mailto:girmayonatan86@gmail.com"><span class="contact-icon"></span>Email</a>
@@ -282,9 +280,9 @@
   </div>
 
   <script>
-    /************************************************************
+    /*************************************************************
      * 1) HERO SHRINK
-     ************************************************************/
+     *************************************************************/
     const heroContainer = document.getElementById('heroContainer');
     window.addEventListener('scroll', () => {
       if (window.scrollY > 150) {
@@ -296,15 +294,15 @@
   </script>
 
   <script>
-    /************************************************************
-     * 2) FILL THE 4 COLUMNS WITH 18 LAZY-LOADED VIDEOS FOR EACH
-     ************************************************************/
+    /*************************************************************
+     * 2) FILL THE 4 COLUMNS FOR 3D & TOUCH WITH LAZY-LOAD
+     *************************************************************/
     const threeDCount = 18;
     const touchCount = 18;
-    const multiCol3D = document.getElementById('multiCol3D').children; // 4 .col
+    const multiCol3D = document.getElementById('multiCol3D').children; // the 4 .col
     const multiColTouch = document.getElementById('multiColTouch').children;
 
-    // 3D
+    // fill 3D
     for (let i = 0; i < threeDCount; i++) {
       const vid = document.createElement('video');
       vid.className = 'rect-video';
@@ -317,7 +315,7 @@
       multiCol3D[i % 4].appendChild(vid);
     }
 
-    // Touch
+    // fill Touch
     for (let i = 0; i < touchCount; i++) {
       const vid = document.createElement('video');
       vid.className = 'rect-video';
@@ -333,9 +331,9 @@
   </script>
 
   <script>
-    /************************************************************
+    /*************************************************************
      * 3) LAZY LOADING => IntersectionObserver
-     ************************************************************/
+     *************************************************************/
     const lazyObserver = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
@@ -352,16 +350,16 @@
   </script>
 
   <script>
-    /************************************************************
-     * 4) SCROLL TILT ONLY FOR NON-DESKTOP
-     ************************************************************/
+    /*************************************************************
+     * 4) SCROLL TILT => only on smaller screens
+     *************************************************************/
     function enableTiltForNonDesktop() {
       if (window.innerWidth >= 1024) {
-        // no tilt on desktop
+        // remove tilt on desktop
         window.removeEventListener('scroll', tiltHandler);
         allVids.forEach(vid => { vid.style.transform = ''; });
       } else {
-        // smaller => tilt
+        // add tilt
         window.addEventListener('scroll', tiltHandler);
       }
     }
@@ -380,9 +378,9 @@
   </script>
 
   <script>
-    /************************************************************
-     * 5) HOVER-TO-PLAY => On mouseover / mouseleave
-     ************************************************************/
+    /*************************************************************
+     * 5) HOVER-TO-PLAY (DESKTOP MOUSEOVER)
+     *************************************************************/
     allVids.forEach(video => {
       video.addEventListener('mouseover', e => {
         e.currentTarget.muted = true;
@@ -397,9 +395,9 @@
   </script>
 
   <script>
-    /************************************************************
-     * 6) DESKTOP-ONLY OVERLAY
-     ************************************************************/
+    /*************************************************************
+     * 6) DESKTOP-ONLY OVERLAY (on click)
+     *************************************************************/
     const desktopOverlay = document.getElementById('desktopOverlay');
     const overlayVideo = document.getElementById('overlayVideo');
     const closeBtn = document.getElementById('closeBtn');
@@ -423,44 +421,37 @@
   </script>
 
   <script>
-    /************************************************************
-     * 7) TOUCH EVENTS => immediate play on tap
-     ************************************************************/
+    /*************************************************************
+     * 7) MOBILE TAP => toggles play/pause
+     *   So one tap starts playing if paused, or pauses if playing.
+     *   No press-and-hold.
+     *************************************************************/
     let mediaQuery = window.matchMedia('(max-width: 600px)');
-    function handleMobileTouch(mq) {
+
+    function handleMobileTap(mq) {
       allVids.forEach(video => {
         if (mq.matches) {
-          // On mobile => immediate play on touchstart, pause on touchend
-          video.addEventListener('touchstart', onTouchStart, {passive: false});
-          video.addEventListener('touchend', onTouchEnd, {passive: false});
+          // On mobile => tap toggles
+          video.addEventListener('touchstart', onTouchToggle, {passive: false});
         } else {
-          // remove if not matched
-          video.removeEventListener('touchstart', onTouchStart);
-          video.removeEventListener('touchend', onTouchEnd);
+          video.removeEventListener('touchstart', onTouchToggle);
         }
       });
     }
-    function onTouchStart(e) {
+
+    function onTouchToggle(e) {
       e.preventDefault();
       const vid = e.currentTarget;
-      try {
-        vid.play();
-      } catch(err) {
-        if (err.name !== "AbortError") console.log(err);
-      }
-    }
-    function onTouchEnd(e) {
-      e.preventDefault();
-      const vid = e.currentTarget;
-      try {
-        vid.pause();
-      } catch(err) {
-        if (err.name !== "AbortError") console.log(err);
+      // if paused => play, else pause
+      if (vid.paused) {
+        try { vid.play(); } catch(err) { if (err.name !== "AbortError") console.log(err); }
+      } else {
+        try { vid.pause(); } catch(err) { if (err.name !== "AbortError") console.log(err); }
       }
     }
 
-    handleMobileTouch(mediaQuery);
-    mediaQuery.addEventListener('change', handleMobileTouch);
+    handleMobileTap(mediaQuery);
+    mediaQuery.addEventListener('change', handleMobileTap);
   </script>
 </body>
 </html>
