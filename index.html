@@ -48,11 +48,6 @@
     .hero-container.shrink {
       padding: 1rem;
     }
-    @media (max-width: 768px) { /* Target devices with a width of 768px or less */
-      .hero-container.shrink {
-        padding: 0.2rem; /* Smaller padding for mobile */
-      }
-    }
 
     /* Animated pop for hero title letters */
     .hero-title {
@@ -67,6 +62,17 @@
       transform: scale(0.8);
       animation: popIn 0.5s ease forwards;
     }
+
+    @media (max-width: 768px) { /* Target devices with a width of 768px or less */
+      .hero-container.shrink {
+        padding: 0.2rem; /* Smaller padding for mobile */
+      }
+      .hero-title {
+        font-size: 1.5rem;
+      }
+
+    }
+
     @keyframes popIn {
       to { transform: scale(1); }
     }
