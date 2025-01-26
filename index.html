@@ -144,7 +144,7 @@
     /* Touch => blue card */
     .card-touch {
       background-color: #3498db; /* blue */
-      z-index: -1;
+      /* z-index: -1; */
     }
 
     /************************************************************
@@ -285,6 +285,9 @@
           <a href="https://www.instagram.com/yonatan.gm/" target="_blank" aria-label="Instagram">
             <i class="fab fa-instagram"></i>
           </a>
+          <a href="https://www.behance.net/yonatanmamo" target="_blank" aria-label="Behance">
+            <i class="fab fa-behance"></i>
+          </a>
         </div>
 
         <div class="nav-pills">
@@ -392,22 +395,30 @@
     // Hardcoded arrays with video file names (just the base names)
     const threeDVideos = [
       "mov32.mp4", "mov30.mp4", "mov33.mp4", "mov22.mp4",
-      "video0.mp4", "video1.mp4", "mov24.mp4",
+      "video0.mp4", /* "video1.mp4" */, "mov24.mp4",
       "video3.mp4", "video4.mp4", "video5.mp4",
-      "video6.mp4", "video7.mp4", "video8.mp4",
+      "video6.mp4", "video12.mp4", "video8.mp4",
       "video9.mp4", "video10.mp4", "video11.mp4",
-      "video12.mp4", "video13.mp4", "video14.mp4",
+      /*"video7.mp4"*/, "video13.mp4", "video14.mp4",
       "video15.mp4", "video16.mp4", "video17.mp4"
     ].reverse();
 
     const touchVideos = [
-      "touchVideo0.mp4", "touchVideo1.mp4", "touchVideo2.mp4",
-      "touchVideo3.mp4", "touchVideo4.mp4", "touchVideo5.mp4",
-      "touchVideo6.mp4", "touchVideo7.mp4", "touchVideo8.mp4",
-      "touchVideo9.mp4", "touchVideo10.mp4", "touchVideo11.mp4",
-      "touchVideo12.mp4", "touchVideo13.mp4", "touchVideo14.mp4",
-      "touchVideo15.mp4", "touchVideo16.mp4", "touchVideo17.mp4"
+      "Movie99.mp4",
+      "Movie10.mp4",
+      "Movie11.mp4",
+      "Movie18.mp4",
+      "Movie21.mp4",
+      "Movie27.mp4",
+      "Movie31.mp4",
+      "Movie40.mp4",
+      "Movie41.mp4",
+      "Movie56.mp4",
+      "Movie62.mp4",
+      "Movie9.mp4",
+      "Movie42.mp4"
     ];
+
 
     // Fill 3D videos
     threeDVideos.forEach((video, index) => {
@@ -593,3 +604,4 @@
   </script>
 </body>
 </html>
+
