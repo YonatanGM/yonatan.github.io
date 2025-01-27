@@ -151,7 +151,7 @@
     /* 3D => red card */
     .card-3d {
       background-color: #e74c3c; /* red */
-      /* z-index: 9999999; */
+      z-index: 9;
     }
     /* Touch => blue card */
     .card-touch {
@@ -163,16 +163,19 @@
      * SECTION TITLES => vertical on desktop, normal on mobile
      ************************************************************/
     .section-title {
+
       margin-bottom: 1rem;
-      font-size: 1.4rem;
+      font-size: 5rem;
       font-weight: 600;
       text-align: center;
       color: #fff;
+      opacity: 0.2; /* subtle wide font effect? up to you */
     }
     /* On desktop => we rotate it vertically on the left side */
     @media (min-width: 1024px) {
       .section-title {
         position: absolute;
+        text-align: left;
         /* writing-mode: vertical-rl; rotate text 90deg to the left */
         /* transform: rotate(-90deg); so top is the original left side up */
         left: 0;
