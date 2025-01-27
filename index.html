@@ -18,7 +18,7 @@
     /* BODY => White margins on sides => we do max-width container */
     body {
       font-family: "Helvetica Neue", sans-serif;
-      background-color: #f9f9f9; /* overall page white */
+      background-color: #fff; /* overall page white */
       color: #000;
       overflow-x: hidden;
     }
@@ -148,6 +148,8 @@
       color: #fff; /* or #000 if you prefer, but typically white on color */
     }
 
+
+
     /* 3D => red card */
     .card-3d {
       background-color: #e74c3c; /* red */
@@ -159,33 +161,36 @@
       /* z-index: -1; */
     }
 
-    /************************************************************
-     * SECTION TITLES => vertical on desktop, normal on mobile
-     ************************************************************/
     .section-title {
+      position: relative;
+      /* margin-bottom: -2rem; */
+      /* font-size: 4rem; */
 
-      margin-bottom: 1rem;
-      font-size: 5rem;
+      font-size: clamp(16px, 10.5vw, 140px);
       font-weight: 600;
       text-align: center;
       color: #fff;
       opacity: 0.2; /* subtle wide font effect? up to you */
+      z-index: 3;
     }
-    /* On desktop => we rotate it vertically on the left side */
-    @media (min-width: 1024px) {
+    @media (min-width: 768px) and (max-width: 1100px) {
       .section-title {
-        position: absolute;
+        font-size: clamp(16px, 12vw, 165px);
+        /* margin-bottom: -2rem; */
         text-align: left;
-        /* writing-mode: vertical-rl; rotate text 90deg to the left */
-        /* transform: rotate(-90deg); so top is the original left side up */
-        left: 0;
-        top: 0%;
-        /* transform-origin: center; */
-        font-size: 10rem;
-        /* text-align: left; */
-        margin: 0; /* no margin since it's absolute */
-        opacity: 0.2; /* subtle wide font effect? up to you */
-        z-index: 3;
+      }
+      .section-card {
+        padding-top: 10rem;
+      }
+    }
+
+    @media (min-width: 1100px) {
+      .section-title {
+        margin-bottom: -1.7rem;
+        text-align: left;
+      }
+      .section-card {
+        padding-top: 2rem;
       }
     }
 
@@ -346,6 +351,7 @@
   </div>
 
   <script>
+
     /*************************************************************
      * 1) ANIMATE HERO TITLE with “pop in” letters
      *************************************************************/
