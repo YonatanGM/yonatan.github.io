@@ -64,14 +64,44 @@
     }
 
     @media (max-width: 768px) { /* Target devices with a width of 768px or less */
-      .hero-container.shrink {
-        padding: 1.1rem; /* Smaller padding for mobile */
-      }
-      .hero-title {
-        font-size: 1.8rem;
-      }
-
+    .hero-container.shrink {
+      padding: 1.1rem; /* Smaller padding for mobile */
     }
+
+    .hero-title {
+      font-size: 1.8rem;
+    }
+
+    /* 1. Prevent "About" Text from Animating on Mobile */
+    /* Disable padding transition on mobile */
+    .hero-container {
+      transition: none !important; /* Ensure no transition on padding */
+    }
+
+    /* Ensure 'hero-about' appears and disappears instantly without animation */
+    .hero-about {
+      display: block !important; /* Override any existing display properties */
+      opacity: 1; /* Ensure full visibility */
+      transition: none !important; /* Remove any transition effects */
+      animation: none !important; /* Remove any animations */
+    }
+
+    /* Hide 'hero-about' instantly when 'shrink' class is applied */
+    .hero-container.shrink .hero-about {
+      display: none !important; /* Instantly hide without animation */
+    }
+
+    /* Hide 'contact-row' instantly when 'shrink' class is applied */
+    .hero-container.shrink .contact-row {
+      display: none !important; /* Instantly hide without animation */
+    }
+
+    /* Maintain smaller padding when 'shrink' class is applied */
+    .hero-container.shrink {
+      padding: 1.1rem;
+    }
+  }
+
 
     @keyframes popIn {
       to { transform: scale(1); }
@@ -127,7 +157,8 @@
     .nav-pills a:hover {
       background-color: #444;
     }
-/*
+
+    /*
     @media (max-width: 768px) {
       .contact-row {
         margin-bottom: 3rem;
@@ -147,7 +178,6 @@
       overflow: hidden; /* ensures no video protrudes outside if taller */
       color: #fff; /* or #000 if you prefer, but typically white on color */
     }
-
 
 
     /* 3D => red card */
@@ -229,15 +259,34 @@
       }
     }
 
+    /* 2. Enhance Video Layout */
     .rect-video {
       width: 100%;
       cursor: pointer;
-      background-color: #222;
-      transition: transform 0.3s;
+      transition: transform 0.3s, box-shadow 0.3s; /* Add transition for smooth effects */
+      border-radius: 0px; /* Increased rounded corners */
+      overflow: hidden; /* Ensure video content respects border-radius */
     }
+
     .rect-video:hover {
-      transform: scale(1.04);
+      /* transform: scale(1.5); Slightly enlarge on hover */
+
     }
+
+
+
+    /* Optional Creative Enhancements */
+
+    /* Add a light border around videos */
+
+
+    /* Consistent Aspect Ratio */
+    .rect-video {
+      padding: 1px;
+      border-radius: 0px; /* bottom corners */
+
+    }
+
 
     /************************************************************
      * DESKTOP OVERLAY
@@ -415,7 +464,7 @@
 
     // Hardcoded arrays with video file names (just the base names)
     const threeDVideos = [
-    "video12.mp4", "video9.mp4",  "video13.mp4", "mov32.mp4", "video11.mp4", "mov30.mp4", "mov33.mp4", "mov22.mp4",
+      "video12.mp4", "video9.mp4",  "video13.mp4", "mov32.mp4", "video11.mp4", "mov30.mp4", "mov33.mp4", "mov22.mp4",
       "video0.mp4", /* "video1.mp4" */, "mov24.mp4",
       "video3.mp4", "video4.mp4", "video5.mp4",
       ,"video6.mp4", "video8.mp4", "video10.mp4",
@@ -438,7 +487,6 @@
       "Movie9.mp4",
       "Movie42.mp4"
     ];
-
 
     // Fill 3D videos
     threeDVideos.forEach((video, index) => {
@@ -624,4 +672,3 @@
   </script>
 </body>
 </html>
-
