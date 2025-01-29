@@ -64,43 +64,43 @@
     }
 
     @media (max-width: 768px) { /* Target devices with a width of 768px or less */
-    .hero-container.shrink {
-      padding: 1.1rem; /* Smaller padding for mobile */
-    }
-
-    .hero-title {
-      font-size: 1.8rem;
-    }
-
-    /* 1. Prevent "About" Text from Animating on Mobile */
-    /* Disable padding transition on mobile */
-    .hero-container {
-      transition: none !important; /* Ensure no transition on padding */
-    }
-
-    /* Ensure 'hero-about' appears and disappears instantly without animation */
-    .hero-about {
-      display: block !important; /* Override any existing display properties */
-      opacity: 1; /* Ensure full visibility */
-      transition: none !important; /* Remove any transition effects */
-      animation: none !important; /* Remove any animations */
-    }
-
-    /* Hide 'hero-about' instantly when 'shrink' class is applied */
-    .hero-container.shrink .hero-about {
-      display: none !important; /* Instantly hide without animation */
-    }
-
-    /* Hide 'contact-row' instantly when 'shrink' class is applied */
-    .hero-container.shrink .contact-row {
-      display: none !important; /* Instantly hide without animation */
-    }
-
-    /* Maintain smaller padding when 'shrink' class is applied */
-    .hero-container.shrink {
-      padding: 1.1rem;
-    }
+  .hero-container.shrink {
+    padding: 1.1rem; /* Smaller padding for mobile */
   }
+
+  .hero-title {
+    font-size: 1.8rem;
+  }
+
+  /* 1. Prevent "About" Text from Animating on Mobile */
+  /* Disable padding transition on mobile */
+  .hero-container {
+    transition: none !important; /* Ensure no transition on padding */
+  }
+
+  /* Ensure 'hero-about' appears and disappears instantly without animation */
+  .hero-about {
+    display: block !important; /* Override any existing display properties */
+    opacity: 1; /* Ensure full visibility */
+    transition: none !important; /* Remove any transition effects */
+    animation: none !important; /* Remove any animations */
+  }
+
+  /* Hide 'hero-about' instantly when 'shrink' class is applied */
+  .hero-container.shrink .hero-about {
+    display: none !important; /* Instantly hide without animation */
+  }
+
+  /* Hide 'contact-row' instantly when 'shrink' class is applied */
+  .hero-container.shrink .contact-row {
+    display: none !important; /* Instantly hide without animation */
+  }
+
+  /* Maintain smaller padding when 'shrink' class is applied */
+  .hero-container.shrink {
+    padding: 1.1rem;
+  }
+}
 
 
     @keyframes popIn {
@@ -178,7 +178,6 @@
       overflow: hidden; /* ensures no video protrudes outside if taller */
       color: #fff; /* or #000 if you prefer, but typically white on color */
     }
-
 
     /* 3D => red card */
     .card-3d {
@@ -269,7 +268,7 @@
     }
 
     .rect-video:hover {
-      transform: scale(1.5);
+      /* transform: scale(1.5); Slightly enlarge on hover */
 
     }
 
@@ -480,7 +479,7 @@
       "Movie21.mp4",
       "Movie27.mp4",
       "Movie31.mp4",
-      "Movie40.mp4",
+      // "Movie40.mp4",
       "Movie41.mp4",
       "Movie56.mp4",
       "Movie62.mp4",
