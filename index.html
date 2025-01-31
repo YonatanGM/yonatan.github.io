@@ -5,7 +5,7 @@
 
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-  <title>Yonatan Mamo - 4 Columns, Stacked Cards</title>
+  <title>Yonatan Mamo - Elegant Portfolio</title>
 
   <style>
     /* RESET */
@@ -15,11 +15,11 @@
       box-sizing: border-box;
     }
 
-    /* BODY => White margins on sides => we do max-width container */
+    /* BODY => Light background with elegant font color */
     body {
       font-family: "Helvetica Neue", sans-serif;
-      background-color: #fff; /* overall page white */
-      color: #000;
+      background-color: #f5f5f5; /* Light gray background */
+      color: #2c2c2c; /* Dark gray for text */
       overflow-x: hidden;
     }
 
@@ -29,21 +29,22 @@
     .page-wrapper {
       max-width: 1200px;
       margin: 0 auto;
-      position: relative; /* so we can position things inside if needed */
+      position: relative;
     }
 
     /************************************************************
-     * STICKY HERO (BLACK)
+     * STICKY HERO (TRANSPARENT BLEND)
      ************************************************************/
     .hero-container {
       position: sticky;
       top: 0; left: 0; right: 0;
-      background-color: #000;
-      border-radius: 0 0 20px 20px; /* bottom corners */
+      background: rgba(255, 255, 255, 0.9); /* Semi-transparent white */
+      backdrop-filter: blur(10px); /* Frosted glass effect */
+      border-bottom: 1px solid #e0e0e0; /* Subtle border */
       z-index: 2000;
       padding: 2rem;
-      transition: padding 0.5s ease;
-      color: #fff;
+      transition: padding 0.3s ease;
+      color: #2c2c2c; /* Dark text */
     }
     .hero-container.shrink {
       padding: 1rem;
@@ -55,7 +56,12 @@
       font-size: 2rem;
       font-weight: 700;
       margin-bottom: 1rem;
-      color: #fff;
+      color: transparent;
+      background: linear-gradient(90deg, #2c2c2c, #555555);
+      -webkit-background-clip: text;
+      background-clip: text;
+      /* Optional reflective effect */
+      text-shadow: 0 2px 4px rgba(0,0,0,0.1);
     }
     .hero-title .letter {
       display: inline-block;
@@ -63,45 +69,39 @@
       animation: popIn 0.5s ease forwards;
     }
 
-    @media (max-width: 768px) { /* Target devices with a width of 768px or less */
-  .hero-container.shrink {
-    padding: 1.1rem; /* Smaller padding for mobile */
-  }
+    @media (max-width: 768px) {
+      .hero-container.shrink {
+        padding: 1.1rem; /* Smaller padding for mobile */
+      }
 
-  .hero-title {
-    font-size: 1.8rem;
-  }
+      .hero-title {
+        font-size: 1.8rem;
+      }
 
-  /* 1. Prevent "About" Text from Animating on Mobile */
-  /* Disable padding transition on mobile */
-  .hero-container {
-    transition: none !important; /* Ensure no transition on padding */
-  }
+      /* Prevent "About" Text from Animating on Mobile */
+      .hero-container {
+        transition: none !important; /* No transition on padding */
+      }
 
-  /* Ensure 'hero-about' appears and disappears instantly without animation */
-  .hero-about {
-    display: block !important; /* Override any existing display properties */
-    opacity: 1; /* Ensure full visibility */
-    transition: none !important; /* Remove any transition effects */
-    animation: none !important; /* Remove any animations */
-  }
+      .hero-about {
+        display: block !important;
+        opacity: 1;
+        transition: none !important;
+        animation: none !important;
+      }
 
-  /* Hide 'hero-about' instantly when 'shrink' class is applied */
-  .hero-container.shrink .hero-about {
-    display: none !important; /* Instantly hide without animation */
-  }
+      .hero-container.shrink .hero-about {
+        display: none !important;
+      }
 
-  /* Hide 'contact-row' instantly when 'shrink' class is applied */
-  .hero-container.shrink .contact-row {
-    display: none !important; /* Instantly hide without animation */
-  }
+      .hero-container.shrink .contact-row {
+        display: none !important;
+      }
 
-  /* Maintain smaller padding when 'shrink' class is applied */
-  .hero-container.shrink {
-    padding: 1.1rem;
-  }
-}
-
+      .hero-container.shrink {
+        padding: 1.1rem;
+      }
+    }
 
     @keyframes popIn {
       to { transform: scale(1); }
@@ -109,104 +109,110 @@
 
     .hero-container.shrink .hero-about,
     .hero-container.shrink .contact-row {
-      display: none; /* hide about/contact fully in shrink mode */
+      display: none; /* Hide about/contact in shrink mode */
     }
     .hero-about {
       line-height: 1.5;
       font-size: 0.95rem;
-      color: #ccc;
+      color: #7f7f7f; /* Medium gray for subtlety */
       margin-bottom: 1.5rem;
       max-width: 900px;
     }
     .contact-row {
       display: flex;
-      gap: 1rem; /* Add space between icons */
-      justify-content: left; /* Center-align the icons */
+      gap: 1rem;
+      justify-content: left;
       margin-bottom: 1.5rem;
     }
 
     .contact-row a {
-      color: #ccc; /* Default icon color */
-      font-size: 24px; /* Icon size */
-      text-decoration: none; /* Remove underline */
+      color: #7f7f7f; /* Medium gray for icons */
+      font-size: 24px;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    .contact-row a:hover {
+      color: #1a73e8; /* Elegant blue on hover */
     }
 
-    .contact-icon {
-      width: 16px;
-      height: 16px;
-      background-color: #888;
-      border-radius: 50%;
-    }
-
-    /* Nav pills remain visible in both states */
+    /* Nav pills with blending effect */
     .nav-pills {
       display: flex;
       gap: 0.5rem;
     }
     .nav-pills a {
+      position: relative;
       display: inline-block;
-      background-color: #222;
-      color: #fff;
       padding: 0.5rem 1rem;
       border-radius: 999px;
       text-decoration: none;
       font-size: 0.9rem;
       font-weight: 500;
-      transition: background-color 0.2s;
+      color: #2c2c2c; /* Dark text */
+      background: rgba(255, 255, 255, 0.7); /* Semi-transparent background */
+      backdrop-filter: blur(5px); /* Slight blur for blending */
+      transition: background 0.3s, color 0.3s;
+    }
+    .nav-pills a::before {
+      content: '';
+      position: absolute;
+      top: -2px; left: -2px; right: -2px; bottom: -2px;
+      background: linear-gradient(45deg, #1a73e8, #8ab4f8, #1a73e8);
+      z-index: -1;
+      filter: blur(8px);
+      opacity: 0;
+      transition: opacity 0.3s;
+      border-radius: 999px;
+    }
+    .nav-pills a:hover::before {
+      opacity: 1;
     }
     .nav-pills a:hover {
-      background-color: #444;
+      color: #ffffff; /* White text on hover */
+      background: #1a73e8; /* Solid elegant blue background on hover */
     }
 
-    /*
-    @media (max-width: 768px) {
-      .contact-row {
-        margin-bottom: 3rem;
-      }
-
-    } */
     /************************************************************
      * SECTION CARDS
      ************************************************************/
-    /* We'll place them inside the .page-wrapper so they share the same left/right margins. */
     .section-card {
       position: relative;
-      margin-top: -40px; /* so it overlaps the previous card's bottom corners */
-      padding-top: 10rem; /* extra top space => see the color above the gallery */
-      padding-bottom: 0rem; /* see color below gallery => ensure corners visible */
+      margin-top: -40px;
+      padding-top: 8rem;
+      padding-bottom: 4rem;
       border-radius: 0 0 20px 20px;
-      overflow: hidden; /* ensures no video protrudes outside if taller */
-      color: #fff; /* or #000 if you prefer, but typically white on color */
+      overflow: hidden;
+      color: #2c2c2c; /* Dark text */
+      box-shadow: 0 4px 6px rgba(0,0,0,0.05);
     }
 
-    /* 3D => red card */
+    /* 3D => Soft Neutral Card */
     .card-3d {
-      background-color: #e74c3c; /* red */
+      background-color: #ffffff; /* White */
+      border: 1px solid #e0e0e0; /* Light gray border */
       z-index: 9;
     }
-    /* Touch => blue card */
+    /* Touch => Soft Neutral Card */
     .card-touch {
-      background-color: #3498db; /* blue */
-      /* z-index: -1; */
+      background-color: #fdfdfd; /* Slightly off-white */
+      border: 1px solid #e0e0e0; /* Light gray border */
     }
 
     .section-title {
-      position: relative;
-      /* margin-bottom: -2rem; */
-      /* font-size: 4rem; */
-
-      font-size: clamp(16px, 10.5vw, 140px);
+      position: absolute;
+      top: 1rem;
+      left: 1rem;
+      font-size: clamp(24px, 5vw, 60px);
       font-weight: 600;
-      text-align: center;
-      color: #fff;
-      opacity: 0.2; /* subtle wide font effect? up to you */
+      text-align: left;
+      color: rgba(44, 44, 44, 0.1); /* Very light text for subtlety */
       z-index: 3;
+      pointer-events: none;
     }
+
     @media (min-width: 768px) and (max-width: 1100px) {
       .section-title {
-        font-size: clamp(16px, 12vw, 165px);
-        /* margin-bottom: -2rem; */
-        text-align: left;
+        font-size: clamp(24px, 6vw, 80px);
       }
       .section-card {
         padding-top: 10rem;
@@ -216,7 +222,6 @@
     @media (min-width: 1100px) {
       .section-title {
         margin-bottom: -1.7rem;
-        text-align: left;
       }
       .section-card {
         padding-top: 2rem;
@@ -224,76 +229,60 @@
     }
 
     /************************************************************
-     * 4-FLEX-COLUMN LAYOUT => no side padding => fill card width
+     * 4-FLEX-COLUMN LAYOUT => fill card width elegantly
      ************************************************************/
     .multi-column {
       display: flex;
-      width: 100%;
-      /* no padding => videos fill the entire card horizontally */
+      gap: 1rem;
+      flex-wrap: wrap;
+      padding: 1rem;
     }
     .col {
+      flex: 1;
+      min-width: 200px;
       display: flex;
       flex-direction: column;
+      gap: 1rem;
     }
 
-    /* 1 column on phone (≤767px) */
+    /* Responsive Columns */
     @media (max-width: 767px) {
-      .multi-column {
-        flex-wrap: wrap;
-      }
       .col {
         width: 100%;
       }
     }
-    /* 2 columns on tablet (768px-1023px) */
     @media (min-width: 768px) and (max-width: 1023px) {
       .col {
         width: 50%;
       }
     }
-    /* 4 columns on desktop (≥1024px) */
     @media (min-width: 1024px) {
       .col {
         width: 25%;
       }
     }
 
-    /* 2. Enhance Video Layout */
+    /* Enhanced Video Layout */
     .rect-video {
       width: 100%;
       cursor: pointer;
-      transition: transform 0.3s, box-shadow 0.3s; /* Add transition for smooth effects */
-      border-radius: 0px; /* Increased rounded corners */
-      overflow: hidden; /* Ensure video content respects border-radius */
+      transition: transform 0.3s, box-shadow 0.3s;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+      background-color: #f0f0f0; /* Placeholder background */
     }
 
     .rect-video:hover {
-      /* transform: scale(1.5); Slightly enlarge on hover */
-
+      transform: scale(1.05);
+      box-shadow: 0 4px 16px rgba(0,0,0,0.1);
     }
 
-
-
-    /* Optional Creative Enhancements */
-
-    /* Add a light border around videos */
-
-
-    /* Consistent Aspect Ratio */
-    .rect-video {
-      padding: 1px;
-      border-radius: 0px; /* bottom corners */
-
-    }
-
-
-    /************************************************************
-     * DESKTOP OVERLAY
-     ************************************************************/
+    /* Overlay Styling */
     .overlay {
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
-      background-color: rgba(0,0,0,0.8);
+      background-color: rgba(255, 255, 255, 0.95); /* Light overlay */
       display: none;
       align-items: center;
       justify-content: center;
@@ -304,7 +293,7 @@
     }
     .overlay-content {
       position: relative;
-      background-color: #000;
+      background-color: #ffffff; /* White background */
       padding: 1rem;
       display: flex;
       align-items: center;
@@ -312,6 +301,8 @@
       max-width: 80%;
       max-height: 80%;
       overflow: hidden;
+      border-radius: 10px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.1);
     }
     .overlay-content video {
       display: block;
@@ -323,12 +314,17 @@
       position: absolute;
       top: 0.5rem;
       right: 0.5rem;
-      background-color: #333;
-      color: #fff;
+      background-color: #e0e0e0; /* Light gray */
+      color: #2c2c2c; /* Dark text */
       border: none;
       font-size: 1rem;
       padding: 0.3rem 0.6rem;
       cursor: pointer;
+      border-radius: 4px;
+      transition: background-color 0.3s;
+    }
+    .close-btn:hover {
+      background-color: #c0c0c0; /* Darker gray on hover */
     }
   </style>
 </head>
@@ -341,7 +337,7 @@
       <div class="hero-content">
         <h1 class="hero-title" id="heroTitle"></h1>
         <div class="hero-about">
-          I enjoy working on procedural design, animations, and interactive projects, combining programming with creative problem-solving. My interests also include UI development, data visualization, and exploring the technical side of graphics and rendering.
+          I work with procedural design and animations, using programming to tackle visual challenges. I also enjoy UI development and data visualization. In my free time, I like coming up with new ideas and experimenting with different visual concepts. I'm currently looking for internships as a technical artist.
         </div>
         <div class="contact-row">
           <a href="mailto:girmayonatan86@gmail.com" aria-label="Email">
@@ -366,7 +362,7 @@
       </div>
     </div>
 
-    <!-- 3D CARD (Red) -->
+    <!-- 3D CARD (Soft Neutral) -->
     <div class="section-card card-3d" id="card3D">
       <!-- Vertical Title for Desktop -->
       <h2 class="section-title">3D</h2>
@@ -378,7 +374,7 @@
       </div>
     </div>
 
-    <!-- TOUCH CARD (Blue) -->
+    <!-- TOUCH CARD (Soft Neutral) -->
     <div class="section-card card-touch" id="cardTouch">
       <h2 class="section-title">TouchDesigner</h2>
       <div class="multi-column" id="multiColTouch">
@@ -454,7 +450,7 @@
 
   <script>
     /*************************************************************
-     * 3) CREATE & LAZY-LOAD 18 videos for 3D & Touch
+     * 3) CREATE & LAZY-LOAD videos for 3D & Touch
      *************************************************************/
     const threeDCount = 18;
     const touchCount = 18;
@@ -466,7 +462,7 @@
       "video12.mp4", "video9.mp4",  "video13.mp4", "mov32.mp4", "video11.mp4", "mov30.mp4", "mov33.mp4", "mov22.mp4",
       "video0.mp4", /* "video1.mp4" */, "mov24.mp4",
       "video3.mp4", "video4.mp4", "video5.mp4",
-      ,"video6.mp4", "video8.mp4", "video10.mp4",
+      "video6.mp4", "video8.mp4", "video10.mp4",
       /*"video7.mp4"*/, "video14.mp4",
       "video15.mp4", "video16.mp4", "video17.mp4",
     ].reverse();
@@ -539,12 +535,6 @@
      * 5) SCROLL TILT => only on smaller screens
      *************************************************************/
     function enableTiltForNonDesktop() {
-      // if (window.innerWidth >= 1024) {
-      //   window.removeEventListener('scroll', tiltHandler);
-      //   allVids.forEach(vid => vid.style.transform = '');
-      // } else {
-      //   window.addEventListener('scroll', tiltHandler);
-      // }
       window.addEventListener('scroll', tiltHandler);
     }
     function tiltHandler() {
@@ -554,9 +544,6 @@
         const maxDistance = 300.0;
         let angle = (distance / maxDistance) * 10;
         angle = Math.max(0, Math.min(200, angle));
-        // if (distance ) {
-        //   angle = 0;
-        // }
         video.style.transform = `rotateY(${angle}deg)`;
       });
     }
@@ -614,7 +601,7 @@
     let mediaQuery = window.matchMedia('(max-width: 600px)');
     function handleMobileHold(mq) {
       allVids.forEach(video => {
-        // remove old
+        // Remove old
         video.removeEventListener('touchstart', onTouchStart);
         video.removeEventListener('touchmove', onTouchMove);
         video.removeEventListener('touchend', onTouchEnd);
