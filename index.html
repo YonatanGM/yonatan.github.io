@@ -50,18 +50,21 @@
       padding: 1rem;
     }
 
-    /* Animated pop for hero title letters */
+    /* Animated pop for hero title letters with mask effect */
     .hero-title {
       display: inline-block;
       font-size: 2rem;
       font-weight: 700;
       margin-bottom: 1rem;
-      color: transparent;
-      background: linear-gradient(90deg, #2c2c2c, #555555);
-      -webkit-background-clip: text;
-      background-clip: text;
-      /* Optional reflective effect */
-      text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      color: #2c2c2c; /* Solid dark text initially */
+      position: relative;
+      z-index: 1;
+      transition: color 0.5s ease;
+    }
+    .hero-title.mask {
+      color: transparent; /* Make text transparent to reveal background */
+      -webkit-text-stroke: 1px #2c2c2c; /* Optional: Outline for readability */
+      mix-blend-mode: multiply; /* Blend mode to allow background visibility */
     }
     .hero-title .letter {
       display: inline-block;
@@ -69,7 +72,7 @@
       animation: popIn 0.5s ease forwards;
     }
 
-    @media (max-width: 768px) {
+    @media (max-width: 768px) { /* Target devices with a width of 768px or less */
       .hero-container.shrink {
         padding: 1.1rem; /* Smaller padding for mobile */
       }
@@ -135,7 +138,7 @@
       color: #1a73e8; /* Elegant blue on hover */
     }
 
-    /* Nav pills with blending effect */
+    /* Nav pills with simplified hover effect */
     .nav-pills {
       display: flex;
       gap: 0.5rem;
@@ -144,32 +147,20 @@
       position: relative;
       display: inline-block;
       padding: 0.5rem 1rem;
-      border-radius: 999px;
+      border-radius: 4px; /* Changed from 999px to 4px for a square-like shape */
       text-decoration: none;
       font-size: 0.9rem;
       font-weight: 500;
       color: #2c2c2c; /* Dark text */
       background: rgba(255, 255, 255, 0.7); /* Semi-transparent background */
       backdrop-filter: blur(5px); /* Slight blur for blending */
-      transition: background 0.3s, color 0.3s;
-    }
-    .nav-pills a::before {
-      content: '';
-      position: absolute;
-      top: -2px; left: -2px; right: -2px; bottom: -2px;
-      background: linear-gradient(45deg, #1a73e8, #8ab4f8, #1a73e8);
-      z-index: -1;
-      filter: blur(8px);
-      opacity: 0;
-      transition: opacity 0.3s;
-      border-radius: 999px;
-    }
-    .nav-pills a:hover::before {
-      opacity: 1;
+      border: 1px solid transparent; /* Initial border */
+      transition: border-color 0.3s, color 0.3s;
     }
     .nav-pills a:hover {
-      color: #ffffff; /* White text on hover */
-      background: #1a73e8; /* Solid elegant blue background on hover */
+      border-color: #1a73e8; /* Border color matches contact icons' hover blue */
+      color: #1a73e8; /* Optional: Change text color to blue on hover for better visual feedback */
+      background: rgba(255, 255, 255, 0.7); /* Maintain background on hover */
     }
 
     /************************************************************
@@ -184,53 +175,13 @@
       overflow: hidden;
       color: #2c2c2c; /* Dark text */
       box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-    }
-
-    /* 3D => Soft Neutral Card */
-    .card-3d {
-      background-color: #ffffff; /* White */
-      border: 1px solid #e0e0e0; /* Light gray border */
-      z-index: 9;
-    }
-    /* Touch => Soft Neutral Card */
-    .card-touch {
-      background-color: #fdfdfd; /* Slightly off-white */
+      background-color: #ffffff; /* White background */
       border: 1px solid #e0e0e0; /* Light gray border */
     }
 
-    .section-title {
-      position: absolute;
-      top: 1rem;
-      left: 1rem;
-      font-size: clamp(24px, 5vw, 60px);
-      font-weight: 600;
-      text-align: left;
-      color: rgba(44, 44, 44, 0.1); /* Very light text for subtlety */
-      z-index: 3;
-      pointer-events: none;
-    }
+    /* Removed section titles as per user request */
 
-    @media (min-width: 768px) and (max-width: 1100px) {
-      .section-title {
-        font-size: clamp(24px, 6vw, 80px);
-      }
-      .section-card {
-        padding-top: 10rem;
-      }
-    }
-
-    @media (min-width: 1100px) {
-      .section-title {
-        margin-bottom: -1.7rem;
-      }
-      .section-card {
-        padding-top: 2rem;
-      }
-    }
-
-    /************************************************************
-     * 4-FLEX-COLUMN LAYOUT => fill card width elegantly
-     ************************************************************/
+    /* Adjusted multi-column layout for better spacing */
     .multi-column {
       display: flex;
       gap: 1rem;
@@ -364,8 +315,7 @@
 
     <!-- 3D CARD (Soft Neutral) -->
     <div class="section-card card-3d" id="card3D">
-      <!-- Vertical Title for Desktop -->
-      <h2 class="section-title">3D</h2>
+      <!-- Removed section-title as per user request -->
       <div class="multi-column" id="multiCol3D">
         <div class="col"></div>
         <div class="col"></div>
@@ -376,7 +326,7 @@
 
     <!-- TOUCH CARD (Soft Neutral) -->
     <div class="section-card card-touch" id="cardTouch">
-      <h2 class="section-title">TouchDesigner</h2>
+      <!-- Removed section-title as per user request -->
       <div class="multi-column" id="multiColTouch">
         <div class="col"></div>
         <div class="col"></div>
@@ -437,13 +387,15 @@
 
   <script>
     /*************************************************************
-     * 2) HERO SHRINK ON SCROLL
+     * 2) HERO SHRINK ON SCROLL AND APPLY MASK EFFECT
      *************************************************************/
     window.addEventListener('scroll', () => {
       if (window.scrollY > 150) {
         heroContainer.classList.add('shrink');
+        heroTitleEl.classList.add('mask'); // Add mask class to apply mask effect
       } else {
         heroContainer.classList.remove('shrink');
+        heroTitleEl.classList.remove('mask'); // Remove mask class to revert to solid text
       }
     });
   </script>
@@ -506,7 +458,6 @@
       vid.loading = 'lazy';
       multiColTouch[index % 4].appendChild(vid); // Distribute videos across columns
     });
-
 
     const allVids = document.querySelectorAll('.rect-video');
   </script>
